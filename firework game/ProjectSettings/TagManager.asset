@@ -41,3 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 880663725
+    locked: 0
+  - name: MakerBase
+    uniqueID: 2557169581
+    locked: 0
+  - name: ItemBack
+    uniqueID: 793597393
+    locked: 0
+  - name: Items
+    uniqueID: 892261889
+    locked: 0
+  - name: ItemFront
+    uniqueID: 2544347689
+    locked: 0
+  - name: UI_World
+    uniqueID: 3917677037
+    locked: 0
+  - name: UI_Top
+    uniqueID: 2417567617
+    locked: 0
