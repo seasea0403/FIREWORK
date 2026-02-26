@@ -1,7 +1,30 @@
 using UnityEngine;
 
+// 物品类型枚举（全局作用域，面板能显示）
+public enum ItemType
+{
+    None,
+    Powder_In, // 倒入的火药
+    Bead_In    // 倒入的彩珠
+}
+
+// 彩珠颜色枚举
+public enum BeadInColor
+{
+    Red,
+    Blue,
+    Gold,
+    Green,
+    LightBlue,
+    Purple
+}
+
 public class ContentItem : MonoBehaviour
 {
+    [Header("=== 倒入物品类型 ===")]
+    public ItemType itemType;
+    public BeadInColor beadColor; // 只有彩珠需要填
+
     [Header("=== 描边设置 ===")]
     [Tooltip("描边宽度（对应材质里的Width）")]
     public int outlineWidth = 3;
@@ -78,7 +101,7 @@ public class ContentItem : MonoBehaviour
         }
     }
 
-    // 控制描边显示/隐藏
+    // 控制描边显示/隐藏（仅定义一次，无重复）
     public void SetOutlineActive(bool active)
     {
         if (_instanceMat == null) return;

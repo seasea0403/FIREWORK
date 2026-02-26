@@ -5,8 +5,14 @@ public class ContentSelector : MonoBehaviour
     // 全局唯一实例，让其他脚本能访问
     public static ContentSelector Instance;
 
-    // 当前选中的物品
-    private ContentItem currentSelectedItem;
+    // 关键修改：把 private 改成 public，或新增公共属性（推荐后者）
+    private ContentItem _currentSelectedItem;
+    // 新增公共属性，外部脚本通过这个属性访问
+    public ContentItem currentSelectedItem
+    {
+        get { return _currentSelectedItem; }
+        set { _currentSelectedItem = value; }
+    }
 
     void Awake()
     {
@@ -26,20 +32,20 @@ public class ContentSelector : MonoBehaviour
     public void OnItemClicked(ContentItem clickedItem)
     {
         // 情况1：点击的是已选中的物品 → 取消选中
-        if (currentSelectedItem == clickedItem)
+        if (_currentSelectedItem == clickedItem)
         {
-            currentSelectedItem.Deselect();
-            currentSelectedItem = null;
+            _currentSelectedItem.Deselect();
+            _currentSelectedItem = null;
         }
         // 情况2：点击新物品 → 取消旧的，选中新的
         else
         {
-            if (currentSelectedItem != null)
+            if (_currentSelectedItem != null)
             {
-                currentSelectedItem.Deselect();
+                _currentSelectedItem.Deselect();
             }
-            currentSelectedItem = clickedItem;
-            currentSelectedItem.Select();
+            _currentSelectedItem = clickedItem;
+            _currentSelectedItem.Select();
         }
     }
 }

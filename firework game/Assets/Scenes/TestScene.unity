@@ -337,6 +337,8 @@ GameObject:
   m_Component:
   - component: {fileID: 216500500}
   - component: {fileID: 216500501}
+  - component: {fileID: 216500503}
+  - component: {fileID: 216500502}
   m_Layer: 0
   m_Name: Powder_Smoke
   m_TagString: Untagged
@@ -353,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 216500499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -17.75, y: -0.84, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -411,6 +413,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &216500502
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216500499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.0216718, y: 3.3231413, z: 0.2}
+  m_Center: {x: -0.014980078, y: 0.34928763, z: 0}
+--- !u!114 &216500503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216500499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 1
+  beadColor: 0
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &246081219
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +786,8 @@ GameObject:
   m_Component:
   - component: {fileID: 451885585}
   - component: {fileID: 451885586}
+  - component: {fileID: 451885587}
+  - component: {fileID: 451885588}
   m_Layer: 0
   m_Name: Bead_Gold
   m_TagString: Untagged
@@ -760,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 451885584}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -14.61, y: 1.19, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -818,6 +862,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &451885587
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451885584}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.106451, y: 1.8764591, z: 0.2}
+  m_Center: {x: 0.018996239, y: -0.074248314, z: 0}
+--- !u!114 &451885588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451885584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 2
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &483957615
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +912,8 @@ GameObject:
   m_Component:
   - component: {fileID: 483957616}
   - component: {fileID: 483957617}
+  - component: {fileID: 483957618}
+  - component: {fileID: 483957619}
   m_Layer: 0
   m_Name: Bead_Red
   m_TagString: Untagged
@@ -844,7 +930,7 @@ Transform:
   m_GameObject: {fileID: 483957615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -11.56, y: -2.53, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -902,6 +988,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &483957618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483957615}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8057842, y: 1.6463836, z: 0.2}
+  m_Center: {x: -0.009587288, y: -0.08302921, z: 0}
+--- !u!114 &483957619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483957615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 0
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,8 +1159,8 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.01, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -14.11, y: 0, z: -10}
+  m_LocalScale: {x: 1.0795, y: 1.0795, z: 1.0795}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1048,6 +1174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 569403155}
+  - component: {fileID: 569403156}
   m_Layer: 0
   m_Name: PowderArea
   m_TagString: Untagged
@@ -1072,6 +1199,18 @@ Transform:
   - {fileID: 201142394}
   m_Father: {fileID: 1939500078}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &569403156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569403154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e495827ca04dd140adc7d3e6e1e888f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1288,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0265, y: 1.0265, z: 1.0265}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1164,6 +1303,8 @@ GameObject:
   m_Component:
   - component: {fileID: 665352832}
   - component: {fileID: 665352833}
+  - component: {fileID: 665352834}
+  - component: {fileID: 665352835}
   m_Layer: 0
   m_Name: Bead_Purple
   m_TagString: Untagged
@@ -1180,7 +1321,7 @@ Transform:
   m_GameObject: {fileID: 665352831}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -11.55, y: 1.26, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1238,6 +1379,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &665352834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665352831}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8715334, y: 1.6574106, z: 0.2}
+  m_Center: {x: -0.00000333786, y: -0.08741391, z: 0}
+--- !u!114 &665352835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665352831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 5
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &704784690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,6 +2037,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1119142603}
   - component: {fileID: 1119142604}
+  - component: {fileID: 1119142605}
+  - component: {fileID: 1119142606}
   m_Layer: 0
   m_Name: Bead_Green
   m_TagString: Untagged
@@ -1872,7 +2055,7 @@ Transform:
   m_GameObject: {fileID: 1119142602}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -14.54, y: -2.67, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1930,6 +2113,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1119142605
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119142602}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7913094, y: 1.6383307, z: 0.2}
+  m_Center: {x: -0.0947361, y: -0.06593382, z: 0}
+--- !u!114 &1119142606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119142602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 3
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1001 &1202216771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2071,11 +2294,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1412541787 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
-  m_PrefabInstance: {fileID: 1202216771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1412541788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6689181722152660158, guid: d497a295acc70f44ea46d875eec17516, type: 3}
@@ -2405,7 +2623,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 892261889
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fb9eac0810928a14584d2d19a51b84b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2427,8 +2645,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1766200271}
   - component: {fileID: 1766200272}
+  - component: {fileID: 1766200273}
+  - component: {fileID: 1766200274}
   m_Layer: 0
-  m_Name: FireworkContent
+  m_Name: PaperTube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2446,7 +2666,8 @@ Transform:
   m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2139648228}
   m_Father: {fileID: 807431407}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1766200272
@@ -2489,7 +2710,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 892261889
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0df00cbebdc95a64db1fc982be444591, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2501,6 +2722,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1766200273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766200270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb033d921cbdec42b81266be6d5539b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powderIn1Prefab: {fileID: 1187577127865456375, guid: 5bdf7e604ab4876439ad1813499f238f, type: 3}
+  powderIn2Prefab: {fileID: 1187577127865456375, guid: ee4a7be424565774f8c613d65921c1e3, type: 3}
+  powderIn3Prefab: {fileID: 1187577127865456375, guid: df3eba32dab21c243941aa48169f5bc6, type: 3}
+  beadInRedPrefab: {fileID: 1187577127865456375, guid: 58f5ac559e869a24b8a4c477aaeec4d6, type: 3}
+  stackRoot: {fileID: 2139648228}
+  orderIncrement: 1
+--- !u!65 &1766200274
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766200270}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.3702888, y: 6.877475, z: 0.2}
+  m_Center: {x: -12.453768, y: -0.010765433, z: 0}
 --- !u!1 &1836374173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,6 +2805,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1866137951}
   - component: {fileID: 1866137952}
+  - component: {fileID: 1866137954}
+  - component: {fileID: 1866137953}
   m_Layer: 0
   m_Name: Powder_Thrust
   m_TagString: Untagged
@@ -2561,7 +2823,7 @@ Transform:
   m_GameObject: {fileID: 1866137950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -17.68, y: -3.61, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2619,6 +2881,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1866137953
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866137950}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8041873, y: 2.858332, z: 0.2}
+  m_Center: {x: -0.07085204, y: 0.043099523, z: 0}
+--- !u!114 &1866137954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866137950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 1
+  beadColor: 0
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 0}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &1900058384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2931,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1900058385}
   - component: {fileID: 1900058386}
+  - component: {fileID: 1900058387}
+  - component: {fileID: 1900058388}
   m_Layer: 0
   m_Name: Bead_LightBlue
   m_TagString: Untagged
@@ -2645,7 +2949,7 @@ Transform:
   m_GameObject: {fileID: 1900058384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -11.57, y: -0.6087588, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2703,6 +3007,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1900058387
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900058384}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.9283772, y: 1.7527677, z: 0.2}
+  m_Center: {x: 0.045250893, y: -0.13575083, z: 0}
+--- !u!114 &1900058388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900058384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 4
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
 --- !u!1 &1939500077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,8 +3177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1961508208}
   - component: {fileID: 1961508209}
-  - component: {fileID: 1961508211}
-  - component: {fileID: 1961508210}
+  - component: {fileID: 1961508212}
+  - component: {fileID: 1961508213}
   m_Layer: 0
   m_Name: Powder_Explode
   m_TagString: Untagged
@@ -2851,7 +3195,7 @@ Transform:
   m_GameObject: {fileID: 1961508207}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -17.79, y: 2.06, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2909,7 +3253,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1961508210
+--- !u!61 &1961508212
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961508207}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.047037363, y: 0.32999372}
+  m_SpriteTilingProperty:
+    border: {x: 0.89000005, y: 7.2645, z: 47.910004, w: 0.81050205}
+    pivot: {x: 0.04408744, y: 0.7660377}
+    oldSize: {x: 51.59, y: 10.806694}
+    newSize: {x: 51.59, y: 10.806694}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.1983485, y: 3.0513992}
+  m_EdgeRadius: 0
+--- !u!114 &1961508213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2918,29 +3307,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961508207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 310c67b4de9b02a42bdcbe2b16c52b2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 1
+  beadColor: 0
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
-  spoonPrefab: {fileID: 0}
-  spoonOffset: {x: 0, y: 0.5, z: 0}
-  isSelected: 0
---- !u!114 &1961508211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961508207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 310c67b4de9b02a42bdcbe2b16c52b2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineWidth: 3
-  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
-  spoonPrefab: {fileID: 1412541787}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
   spoonOffset: {x: 0, y: 0.5, z: 0}
   isSelected: 0
 --- !u!1 &2000957277
@@ -3048,7 +3422,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 892261889
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d93df3614c8ed134b82b7bba796c7960, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3070,6 +3444,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2121322673}
   - component: {fileID: 2121322674}
+  - component: {fileID: 2121322675}
+  - component: {fileID: 2121322676}
   m_Layer: 0
   m_Name: Bead_Blue
   m_TagString: Untagged
@@ -3086,7 +3462,7 @@ Transform:
   m_GameObject: {fileID: 2121322672}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.684994, y: -0.6087588, z: 0.013608821}
+  m_LocalPosition: {x: -14.67, y: -0.6087588, z: 0.013608821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3144,6 +3520,77 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &2121322675
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121322672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7458076, y: 1.5596182, z: 0.2}
+  m_Center: {x: 0.01023674, y: -0.09139526, z: 0}
+--- !u!114 &2121322676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121322672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 2
+  beadColor: 1
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  spoonPrefab: {fileID: 7909437417174126046, guid: d497a295acc70f44ea46d875eec17516, type: 3}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
+--- !u!1 &2139648227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139648228}
+  m_Layer: 0
+  m_Name: StackRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139648228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139648227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.53, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1766200271}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
