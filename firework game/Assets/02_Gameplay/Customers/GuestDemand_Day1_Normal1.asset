@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
+  m_Name: GuestDemand_Day1_Normal1
+  m_EditorClassIdentifier: 
+  guestName: 
+  demandDesc: "\u638C\u67DC\u7684\uFF0C\u5E74\u5173\u8FD1\u4E86\uFF0C\u60F3\u4E70\u4E2A\u54CD\u70AE\u4ED7\u53BB\u53BB\u6666\u6C14\uFF0C\u5C31\u8981\u90A3\u6700\u5BFB\u5E38\u7684\u3002"
+  moneyReward: 0
+  PerfectText: 
+  GoodText: 
+  FailText: 
+  TimeOutText: 
+  isSpecialNPC: 0
+  coreRequirements: 01000000
+  secondaryRequirements: 
+  forbiddenComponents: 
+  giveFragment: 0
+  fragmentCount: 1
