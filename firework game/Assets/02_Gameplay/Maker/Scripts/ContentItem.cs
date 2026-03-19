@@ -1,14 +1,29 @@
 using UnityEngine;
 
-// 物品类型枚举（全局作用域，面板能显示）
 public enum ItemType
 {
     None,
     Powder_In, // 倒入的火药
-    Bead_In    // 倒入的彩珠
+    Bead_In,   // 倒入的彩珠
+    Package_Clay, // 包装区粘土（显示勺子）
+    Package_Fuse,  // 包装区引线（隐藏勺子）
+    Shell,
+    Cover
+}
+public enum ShellShape
+{
+    Cylinder,
+    Pyramid,
+    Round
 }
 
-// 彩珠颜色枚举
+public enum CoverColor
+{
+    Green,
+    Blue,
+    Yellow
+}
+
 public enum BeadInColor
 {
     Red,
@@ -24,6 +39,10 @@ public class ContentItem : MonoBehaviour
     [Header("=== 倒入物品类型 ===")]
     public ItemType itemType;
     public BeadInColor beadColor; // 只有彩珠需要填
+    public ShellShape shellShape;//只有外壳需要填
+    public CoverColor coverColor;//只有包装需要填
+
+
 
     [Header("=== 描边设置 ===")]
     [Tooltip("描边宽度（对应材质里的Width）")]
@@ -32,6 +51,8 @@ public class ContentItem : MonoBehaviour
     public Color outlineColor = new Color(1, 0.84f, 0); // 金色
 
     [Header("=== 勺子设置 ===")]
+    [Tooltip("是否显示勺子（引线设为false）")]
+    public bool showSpoon = true; // 新增：勺子显示开关
     [Tooltip("拖入你的勺子预制体")]
     public GameObject spoonPrefab;
     [Tooltip("勺子在物品上方的偏移量，可实时调整")]
@@ -50,8 +71,11 @@ public class ContentItem : MonoBehaviour
         // 2. 初始隐藏描边
         SetOutlineActive(false);
 
-        // 3. 初始化勺子（生成+隐藏）
-        InitSpoon();
+        // 3. 初始化勺子（只有showSpoon为true时才生成）
+        if (showSpoon)
+        {
+            InitSpoon();
+        }
     }
 
     // 鼠标点击物品时触发
@@ -95,13 +119,13 @@ public class ContentItem : MonoBehaviour
             // 初始隐藏勺子
             _spoonInstance.SetActive(false);
         }
-        else
+        else if (showSpoon) // 仅当需要显示勺子时才警告
         {
             Debug.LogWarning("未设置勺子预制体！", this);
         }
     }
 
-    // 控制描边显示/隐藏（仅定义一次，无重复）
+    // 控制描边显示/隐藏
     public void SetOutlineActive(bool active)
     {
         if (_instanceMat == null) return;
@@ -118,7 +142,11 @@ public class ContentItem : MonoBehaviour
     {
         isSelected = true;
         SetOutlineActive(true); // 显示描边
-        if (_spoonInstance != null) _spoonInstance.SetActive(true); // 显示勺子
+        // 只有开启勺子显示时，才显示勺子
+        if (showSpoon && _spoonInstance != null)
+        {
+            _spoonInstance.SetActive(true);
+        }
     }
 
     // 取消选中（外部调用）
@@ -126,7 +154,11 @@ public class ContentItem : MonoBehaviour
     {
         isSelected = false;
         SetOutlineActive(false); // 隐藏描边
-        if (_spoonInstance != null) _spoonInstance.SetActive(false); // 隐藏勺子
+        // 只有开启勺子显示时，才隐藏勺子
+        if (showSpoon && _spoonInstance != null)
+        {
+            _spoonInstance.SetActive(false);
+        }
     }
     #endregion
 }
