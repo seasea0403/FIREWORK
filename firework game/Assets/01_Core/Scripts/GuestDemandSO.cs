@@ -8,35 +8,50 @@ using System.Collections.Generic;
 public class GuestDemandSO : ScriptableObject
 {
     [Header("🎎 基础信息")]
-    [Tooltip("客人名称（比如“普通客人1”“顾文才”）")]
+    [Tooltip("客人名称")]
     public string guestName;
 
-    [Tooltip("客人需求描述（显示给玩家，比如“要个最寻常的响炮仗”）")]
+    [Tooltip("客人需求描述")]
     [TextArea(2, 4)] // 多行输入，方便填写长文本
     public string demandDesc;
 
     [Tooltip("完美评价的报酬金额")]
-    public int perfectMoney;
+    public int perfectMoney = 100;
 
     [Tooltip("良好评价的报酬金额")]
-    public int goodMoney;
+    public int goodMoney = 60;
 
-    [Tooltip("失败评价的报酬金额（策划要求“钱少”，可设为完美的1/3）")]
-    public int failMoney;
+    [Tooltip("失败评价的报酬金额）")]
+    public int failMoney = 20;
 
-    [Tooltip("好评台词（比如“神乎其技！”）")]
+    [Tooltip("超时的报酬金额）")]
+    public int timeoutMoney =0 ;
+
+    [Tooltip("完美评价台词")]
     [TextArea(1, 2)]
-    public string praiseText;
+    // 给完美台词加默认值
+    public string perfectText = "神乎其技！比某想的还要好，下回定当再来光顾！";
 
-    [Tooltip("差评台词（比如“货不对板！”）")]
+    [Tooltip("良好评价台词")]
     [TextArea(1, 2)]
-    public string criticizeText;
+    // 给良好台词加默认值
+    public string goodText = "尚可尚可，勉强合某心意，赏你些碎银！";
+
+    [Tooltip("差评台词")]
+    [TextArea(1, 2)]
+    // 给差评台词也加默认值，更实用
+    public string failText = "货不对板！这般手艺也敢出来做生意？扣钱！";
+
+    [Tooltip("时间台词")]
+    [TextArea(1, 2)]
+    // 给差评台词也加默认值，更实用
+    public string timeoutText = "这……做得也太慢了，某去别家看看。";
 
     [Tooltip("是否是特殊NPC（比如顾文才、英娥）")]
     public bool isSpecialNPC;
 
     // ========== 新增：客人2D形象配置（直接拖入Sprite） ==========
-    [Header("🎨 客人2D形象（直接拖入图片资源）")]
+    [Header("🎨 客人2D形象")]
     [Tooltip("基础状态形象（初始显示）")]
     public Sprite normalSprite;
 
@@ -47,17 +62,23 @@ public class GuestDemandSO : ScriptableObject
     public Sprite angrySprite;
 
     [Header("✅ 判定规则（严格按策划配置）")]
-    [Tooltip("核心判定：必须全满足，否则失败（比如“普通火药+短引线”）")]
-    public List<FireworkComponent> coreRequirements = new List<FireworkComponent>();
+    [Tooltip("核心判定-指定单个：必须包含这些组件（比如“必须是红彩珠”）")]
+    public List<FireworkComponent> coreSpecificComponents = new List<FireworkComponent>();
 
-    [Tooltip("次要判定：部分满足即可（比如“红色彩纸”），全满足则完美")]
-    public List<FireworkComponent> secondaryRequirements = new List<FireworkComponent>();
+    [Tooltip("核心判定-类别任选：每个类别至少选一个（比如“彩珠类选任意一个”）")]
+    public List<ComponentCategory> coreCategoryAnyOne = new List<ComponentCategory>();
 
-    [Tooltip("禁止组件：不能添加的组件（比如“不要彩珠”）")]
+    [Tooltip("次要判定-指定单个：包含这些组件加分（全满足则完美）")]
+    public List<FireworkComponent> secondarySpecificComponents = new List<FireworkComponent>();
+
+    [Tooltip("次要判定-类别任选：每个类别至少选一个加分（全满足则完美）")]
+    public List<ComponentCategory> secondaryCategoryAnyOne = new List<ComponentCategory>();
+
+    [Tooltip("禁止组件：绝对不能包含的组件")]
     public List<FireworkComponent> forbiddenComponents = new List<FireworkComponent>();
 
     [Header("🎁 特殊奖励（仅特殊NPC生效）")]
-    [Tooltip("是否发放天宫录碎片（策划要求“特殊NPC全做对才掉落”）")]
+    [Tooltip("是否发放天宫录碎片（特殊NPC全做对才掉落")]
     public bool giveFragment;
 
     [Tooltip("碎片数量（默认1块）")]
