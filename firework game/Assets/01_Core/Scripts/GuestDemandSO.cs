@@ -75,7 +75,9 @@ public class GuestDemandSO : ScriptableObject
     public List<ComponentCategory> secondaryCategoryAnyOne = new List<ComponentCategory>();
 
     [Tooltip("禁止组件：绝对不能包含的组件")]
-    public List<FireworkComponent> forbiddenComponents = new List<FireworkComponent>();
+    public List<FireworkComponent> forbiddenSpecificComponents = new List<FireworkComponent>();
+    public List<ComponentCategory> forbiddenCategoryAnyOne = new List<ComponentCategory>();
+
 
     [Header("🎁 特殊奖励（仅特殊NPC生效）")]
     [Tooltip("是否发放天宫录碎片（特殊NPC全做对才掉落")]

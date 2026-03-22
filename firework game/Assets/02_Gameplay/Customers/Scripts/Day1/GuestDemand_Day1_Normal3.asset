@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
+  m_Name: GuestDemand_Day1_Normal3
+  m_EditorClassIdentifier: 
+  guestName: "\u8363\u5B89\u90A6"
+  demandDesc: "\u8981\u6BD4\u5E73\u5E38\u70AE\u4ED7\u66F4\u52A0\u9707\u5F97\u4EBA\u8033\u6735\u55E1\u55E1\u54CD\u7684\u90A3\u79CD\uFF01\u82B1\u91CC\u80E1\u54E8\u7684\u6771\u897F\u53EF\u522B\u52A0"
+  perfectMoney: 100
+  goodMoney: 60
+  failMoney: 20
+  timeoutMoney: 0
+  perfectText: "\u795E\u4E4E\u5176\u6280\uFF01\u6BD4\u67D0\u60F3\u7684\u8FD8\u8981\u597D\uFF0C\u4E0B\u56DE\u5B9A\u5F53\u518D\u6765\u5149\u987E\uFF01"
+  goodText: "\u5C1A\u53EF\u5C1A\u53EF\uFF0C\u52C9\u5F3A\u5408\u67D0\u5FC3\u610F\uFF0C\u8D4F\u4F60\u4E9B\u788E\u94F6\uFF01"
+  failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
+  timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
+  isSpecialNPC: 0
+  normalSprite: {fileID: 21300000, guid: a3f22a72470ce6f48a37ba3e02f25737, type: 3}
+  happySprite: {fileID: 21300000, guid: 6ed5c8d0f40bbce4fbfb2ae3005f058c, type: 3}
+  angrySprite: {fileID: 21300000, guid: 394b7eb58bcbb3a419db838153984caf, type: 3}
+  coreSpecificComponents: 0000000000000000
+  coreCategoryAnyOne: 
+  secondarySpecificComponents: 03000000
+  secondaryCategoryAnyOne: 04000000
+  forbiddenSpecificComponents: 
+  forbiddenCategoryAnyOne: 03000000
+  giveFragment: 0
+  fragmentCount: 1
