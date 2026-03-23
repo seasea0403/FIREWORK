@@ -34,7 +34,8 @@ public enum FireworkComponent
     Partition,       // 隔板（Day3解锁）
     RedPaper,        // 红色彩纸（基础组件）
     YellowPaper,     // 黄色彩纸（基础组件）
-    GreenPaper       // 绿色彩纸（基础组件）
+    GreenPaper,       // 绿色彩纸（基础组件）
+    Clay             //粘土
 }
 
 /// <summary>

@@ -1,26 +1,31 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ContentSelector : MonoBehaviour
 {
-    // 全局唯一实例，让其他脚本能访问
+    // 单例实例
     public static ContentSelector Instance;
 
-    // 关键修改：把 private 改成 public，或新增公共属性（推荐后者）
-    private ContentItem _currentSelectedItem;
-    // 新增公共属性，外部脚本通过这个属性访问
-    public ContentItem currentSelectedItem
+    // 私有变量（加m_前缀）
+    private ContentItem m_CurrentSelectedItem;
+    private List<FireworkComponent> m_SelectedFireworkComponents = new List<FireworkComponent>();
+
+    // 公共属性
+    public ContentItem CurrentSelectedItem
     {
-        get { return _currentSelectedItem; }
-        set { _currentSelectedItem = value; }
+        get { return m_CurrentSelectedItem; }
+        set { m_CurrentSelectedItem = value; }
     }
+
+    public List<FireworkComponent> SelectedFireworkComponents => new List<FireworkComponent>(m_SelectedFireworkComponents);
 
     void Awake()
     {
-        // 确保场景里只有一个ContentSelector
+        // 单例初始化
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 防止场景切换丢失
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -28,24 +33,59 @@ public class ContentSelector : MonoBehaviour
         }
     }
 
-    // 外部调用：物品被点击时执行
+    /// <summary>
+    /// 物品点击回调
+    /// </summary>
     public void OnItemClicked(ContentItem clickedItem)
     {
-        // 情况1：点击的是已选中的物品 → 取消选中
-        if (_currentSelectedItem == clickedItem)
+        // 取消当前选中
+        if (m_CurrentSelectedItem == clickedItem)
         {
-            _currentSelectedItem.Deselect();
-            _currentSelectedItem = null;
+            m_CurrentSelectedItem.Deselect();
+            // 移除映射的组件
+            FireworkComponent comp = FireworkComponentMapper.MapToFireworkComponent(clickedItem);
+            if (m_SelectedFireworkComponents.Contains(comp))
+            {
+                m_SelectedFireworkComponents.Remove(comp);
+            }
+            m_CurrentSelectedItem = null;
         }
-        // 情况2：点击新物品 → 取消旧的，选中新的
+        // 选中新物品
         else
         {
-            if (_currentSelectedItem != null)
+            if (m_CurrentSelectedItem != null)
             {
-                _currentSelectedItem.Deselect();
+                m_CurrentSelectedItem.Deselect();
+                // 移除旧组件
+                FireworkComponent oldComp = FireworkComponentMapper.MapToFireworkComponent(m_CurrentSelectedItem);
+                if (m_SelectedFireworkComponents.Contains(oldComp))
+                {
+                    m_SelectedFireworkComponents.Remove(oldComp);
+                }
             }
-            _currentSelectedItem = clickedItem;
-            _currentSelectedItem.Select();
+            m_CurrentSelectedItem = clickedItem;
+            m_CurrentSelectedItem.Select();
+            // 添加新组件
+            FireworkComponent newComp = FireworkComponentMapper.MapToFireworkComponent(clickedItem);
+            if (!m_SelectedFireworkComponents.Contains(newComp))
+            {
+                m_SelectedFireworkComponents.Add(newComp);
+            }
         }
+
+        Debug.Log("当前选中组件：" + string.Join(",", m_SelectedFireworkComponents));
+    }
+
+    /// <summary>
+    /// 清空所有选择
+    /// </summary>
+    public void ClearAllSelection()
+    {
+        if (m_CurrentSelectedItem != null)
+        {
+            m_CurrentSelectedItem.Deselect();
+        }
+        m_CurrentSelectedItem = null;
+        m_SelectedFireworkComponents.Clear();
     }
 }

@@ -1,114 +1,140 @@
 ﻿using UnityEngine;
 using DG.Tweening;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PackageTableLogic : MonoBehaviour
 {
     [Header("=== 纸筒配置 ===")]
-    public GameObject existingPaperTube; // 场景中已有的纸筒物体（不再是预制体）
-    public Transform tubeTargetPoint; // 纸筒要移动到的桌子目标位置
-    public Vector3 tubeTargetScale = new Vector3(0.8f, 0.8f, 0.8f); // 纸筒目标缩放
-    public float tubeTargetAlpha = 1f; // 纸筒最终透明度（不透明）
-    public float tubeMoveDuration = 0.5f; // 纸筒移动+缩放+透明度动画时长
+    public GameObject existingPaperTube;
+    public Transform tubeTargetPoint;
+    public Vector3 tubeTargetScale = new Vector3(0.8f, 0.8f, 0.8f);
+    public float tubeTargetAlpha = 1f;
+    public float tubeMoveDuration = 0.5f;
 
-    // 私有变量
-    private bool isTubeMoved = false; // 纸筒是否已移动到桌子（防重复操作）
-    private SpriteRenderer tubeSpriteRenderer; // 纸筒的精灵渲染器
-    private Vector3 tubeOriginalPos; // 纸筒初始位置（用于重置）
-    private Vector3 tubeOriginalScale; // 纸筒初始缩放（用于重置）
-    private Color tubeOriginalColor; // 纸筒初始颜色（用于重置）
+    [Header("=== 客人需求UI ===")]
+    public Text guestNameText;
+    public Text guestDemandText;
+
+    // 私有变量（加m_前缀）
+    private bool m_IsTubeMoved = false;
+    private SpriteRenderer m_TubeSpriteRenderer;
+    private Vector3 m_TubeOriginalPos;
+    private Vector3 m_TubeOriginalScale;
+    private Color m_TubeOriginalColor;
 
     void Start()
     {
-        // 初始化：获取纸筒的精灵渲染器（提前缓存）
+        // 初始化纸筒参数
         if (existingPaperTube != null)
         {
-            // 缓存纸筒初始状态（用于重置）
-            tubeOriginalPos = existingPaperTube.transform.position;
-            tubeOriginalScale = existingPaperTube.transform.localScale;
+            m_TubeOriginalPos = existingPaperTube.transform.position;
+            m_TubeOriginalScale = existingPaperTube.transform.localScale;
 
             // 获取精灵渲染器
-            tubeSpriteRenderer = existingPaperTube.GetComponent<SpriteRenderer>();
-            if (tubeSpriteRenderer == null)
+            m_TubeSpriteRenderer = existingPaperTube.GetComponent<SpriteRenderer>();
+            if (m_TubeSpriteRenderer == null)
             {
-                tubeSpriteRenderer = existingPaperTube.GetComponentInChildren<SpriteRenderer>();
+                m_TubeSpriteRenderer = existingPaperTube.GetComponentInChildren<SpriteRenderer>();
             }
 
-            // 缓存初始颜色（含透明度）
-            if (tubeSpriteRenderer != null)
+            // 缓存初始颜色
+            if (m_TubeSpriteRenderer != null)
             {
-                tubeOriginalColor = tubeSpriteRenderer.color;
+                m_TubeOriginalColor = m_TubeSpriteRenderer.color;
             }
-
         }
+
+        // 初始化客人UI
+        UpdateGuestDemandUI();
     }
 
-    #region 1. 点击桌子移动纸筒到目标位置
+    /// <summary>
+    /// 点击工作台移动纸筒
+    /// </summary>
     void OnMouseDown()
     {
-        // 防止重复移动纸筒
-        if (isTubeMoved || existingPaperTube == null) return;
-
-        // 移动纸筒到桌子位置并调整状态
+        if (m_IsTubeMoved || existingPaperTube == null) return;
         MovePaperTubeToTable();
     }
 
-    // 核心逻辑：移动已有纸筒 + 缩放 + 不透明化
+    /// <summary>
+    /// 移动纸筒到工作台
+    /// </summary>
     public void MovePaperTubeToTable()
     {
-
-        // 2. 设置父物体（可选：让纸筒跟随桌子移动）
+        // 设置父物体
         existingPaperTube.transform.parent = transform;
 
-        // 3. 动画：移动到桌子目标位置（移除弹跳，改为线性无抖动）
+        // 移动动画
         existingPaperTube.transform.DOMove(tubeTargetPoint.position, tubeMoveDuration)
-            .SetEase(Ease.Linear); // ✅ 关键修改：去掉OutBounce，改为Linear
+            .SetEase(Ease.Linear);
 
-        // 4. 动画：缩放到目标大小（移除弹跳，改为线性无抖动）
+        // 缩放动画
         existingPaperTube.transform.DOScale(tubeTargetScale, tubeMoveDuration)
-            .SetEase(Ease.Linear); // ✅ 关键修改：去掉OutBounce，改为Linear
+            .SetEase(Ease.Linear);
 
-        // 5. 动画：从不透明到透明（不透明化）
-        if (tubeSpriteRenderer != null)
+        // 透明度动画
+        if (m_TubeSpriteRenderer != null)
         {
-            tubeSpriteRenderer.DOFade(tubeTargetAlpha, tubeMoveDuration)
+            m_TubeSpriteRenderer.DOFade(tubeTargetAlpha, tubeMoveDuration)
                 .SetEase(Ease.OutQuad);
         }
 
-        // 标记为已移动，防止重复操作
-        isTubeMoved = true;
-
-        Debug.Log("纸筒已移动到包装区桌子！");
+        m_IsTubeMoved = true;
+        Debug.Log("纸筒已移动到工作台！");
     }
-    #endregion
 
+    /// <summary>
+    /// 更新客人需求UI
+    /// </summary>
+    public void UpdateGuestDemandUI()
+    {
+        if (guestNameText == null || guestDemandText == null) return;
 
-    // 重置包装区（纸筒回到初始状态）
+        GuestDemandSO currentGuest = GuestManager.Instance?.currentGuest;
+        if (currentGuest == null)
+        {
+            guestNameText.text = "暂无客人";
+            guestDemandText.text = "请等待客人到来...";
+            return;
+        }
+
+        // 显示客人信息
+        guestNameText.text = $"当前客人：{currentGuest.guestName}";
+        guestDemandText.text = $"需求：{currentGuest.demandDesc}";
+    }
+
+    /// <summary>
+    /// 重置工作台
+    /// </summary>
     public void ResetPackageTable()
     {
         if (existingPaperTube == null) return;
 
-        // 停止所有动画（防止重置时动画还在运行）
+        // 停止所有动画
         existingPaperTube.transform.DOKill();
-        if (tubeSpriteRenderer != null)
+        if (m_TubeSpriteRenderer != null)
         {
-            tubeSpriteRenderer.DOKill();
+            m_TubeSpriteRenderer.DOKill();
         }
 
-        // 重置位置、缩放、父物体
-        existingPaperTube.transform.parent = null; // 取消父物体
-        existingPaperTube.transform.position = tubeOriginalPos; // 回到初始位置
-        existingPaperTube.transform.localScale = tubeOriginalScale; // 回到初始缩放
+        // 复位纸筒
+        existingPaperTube.transform.parent = null;
+        existingPaperTube.transform.position = m_TubeOriginalPos;
+        existingPaperTube.transform.localScale = m_TubeOriginalScale;
 
-        // 重置颜色（含透明度）
-        if (tubeSpriteRenderer != null)
+        // 复位颜色
+        if (m_TubeSpriteRenderer != null)
         {
-            tubeSpriteRenderer.color = tubeOriginalColor;
+            m_TubeSpriteRenderer.color = m_TubeOriginalColor;
         }
 
         // 重置标记
-        isTubeMoved = false;
+        m_IsTubeMoved = false;
 
-        Debug.Log("纸筒已重置到初始状态！");
+        // 更新客人UI
+        UpdateGuestDemandUI();
+
+        Debug.Log("工作台已重置！");
     }
 }

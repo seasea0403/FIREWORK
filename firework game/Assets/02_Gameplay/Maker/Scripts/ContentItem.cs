@@ -1,48 +1,9 @@
 using UnityEngine;
 
-public enum ItemType
-{
-    None,
-    Powder_In, // 倒入的火药
-    Bead_In,   // 倒入的彩珠
-    Package_Clay, // 包装区粘土（显示勺子）
-    Package_Fuse,  // 包装区引线（隐藏勺子）
-    Shell,
-    Cover
-}
-public enum ShellShape
-{
-    Cylinder,
-    Pyramid,
-    Round
-}
-
-public enum CoverColor
-{
-    Green,
-    Blue,
-    Yellow
-}
-
-public enum BeadInColor
-{
-    Red,
-    Blue,
-    Gold,
-    Green,
-    LightBlue,
-    Purple
-}
-
 public class ContentItem : MonoBehaviour
 {
-    [Header("=== 倒入物品类型 ===")]
-    public ItemType itemType;
-    public BeadInColor beadColor; // 只有彩珠需要填
-    public ShellShape shellShape;//只有外壳需要填
-    public CoverColor coverColor;//只有包装需要填
-
-
+    [Header("=== 烟花组件类型 ===")]
+    public FireworkComponent fireworkComponent;
 
     [Header("=== 描边设置 ===")]
     [Tooltip("描边宽度（对应材质里的Width）")]
@@ -52,112 +13,116 @@ public class ContentItem : MonoBehaviour
 
     [Header("=== 勺子设置 ===")]
     [Tooltip("是否显示勺子（引线设为false）")]
-    public bool showSpoon = true; // 新增：勺子显示开关
+    public bool showSpoon = true;
     [Tooltip("拖入你的勺子预制体")]
     public GameObject spoonPrefab;
-    [Tooltip("勺子在物品上方的偏移量，可实时调整")]
+    [Tooltip("勺子在物品上方的偏移量")]
     public Vector3 spoonOffset = new Vector3(0, 0.5f, 0);
 
-    // 私有变量
-    private Material _instanceMat; // 每个物品独立的材质实例
-    private GameObject _spoonInstance; // 生成的勺子实例
-    public bool isSelected = false; // 是否被选中
+    // 私有变量（加m_前缀）
+    private Material m_InstanceMat; // 独立材质实例
+    private GameObject m_SpoonInstance; // 勺子实例
+    private bool m_IsUnlocked; // 解锁状态
+    public bool isSelected = false; // 是否选中（保留原有命名，避免绑定问题）
+    public bool IsUnlocked => m_IsUnlocked;
 
     void Start()
     {
-        // 1. 初始化材质实例（避免多个物品共享一个材质状态）
+        // 检查解锁状态
+        m_IsUnlocked = FireworkComponentMapper.IsItemUnlocked(this);
+        if (!m_IsUnlocked)
+        {
+            // 灰显+禁用点击
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
+            }
+            Collider2D collider = GetComponent<Collider2D>();
+            if (collider != null) collider.enabled = false;
+            return;
+        }
+
+        // 初始化材质
         InitMaterialInstance();
-
-        // 2. 初始隐藏描边
+        // 初始隐藏描边
         SetOutlineActive(false);
-
-        // 3. 初始化勺子（只有showSpoon为true时才生成）
+        // 初始化勺子
         if (showSpoon)
         {
             InitSpoon();
         }
     }
 
-    // 鼠标点击物品时触发
+    /// <summary>
+    /// 鼠标点击触发
+    /// </summary>
     void OnMouseDown()
     {
-        Debug.Log("我被点击了！物体名：" + gameObject.name, this);
-        // 告诉管理器：我被点击了
+        if (!m_IsUnlocked) return;
+
+        Debug.Log("点击物品：" + gameObject.name, this);
         if (ContentSelector.Instance != null)
         {
             ContentSelector.Instance.OnItemClicked(this);
         }
     }
 
-    #region 核心方法
-    // 初始化材质实例
+    #region 核心方法（保留原有逻辑）
     private void InitMaterialInstance()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null && sr.material != null)
         {
-            // 创建材质副本（每个物品独立）
-            _instanceMat = new Material(sr.material);
-            // 替换物品的材质为副本
-            sr.material = _instanceMat;
+            m_InstanceMat = new Material(sr.material);
+            sr.material = m_InstanceMat;
         }
         else
         {
-            Debug.LogWarning("当前物体没有SpriteRenderer或材质！", this);
+            Debug.LogWarning("无SpriteRenderer或材质！", this);
         }
     }
 
-    // 初始化勺子
     private void InitSpoon()
     {
         if (spoonPrefab != null)
         {
-            // 生成勺子，父物体设为当前物品（跟随物品移动）
-            _spoonInstance = Instantiate(spoonPrefab, transform);
-            // 设置勺子位置偏移
-            _spoonInstance.transform.localPosition = spoonOffset;
-            // 初始隐藏勺子
-            _spoonInstance.SetActive(false);
+            m_SpoonInstance = Instantiate(spoonPrefab, transform);
+            m_SpoonInstance.transform.localPosition = spoonOffset;
+            m_SpoonInstance.SetActive(false);
         }
-        else if (showSpoon) // 仅当需要显示勺子时才警告
+        else if (showSpoon)
         {
             Debug.LogWarning("未设置勺子预制体！", this);
         }
     }
 
-    // 控制描边显示/隐藏
     public void SetOutlineActive(bool active)
     {
-        if (_instanceMat == null) return;
+        if (m_InstanceMat == null) return;
 
-        // 开关描边（_OutlineEnabled是Sprites/Outline材质的核心参数）
-        _instanceMat.SetInt("_OutlineEnabled", active ? 1 : 0);
-        // 同步描边宽度和颜色
-        _instanceMat.SetFloat("_OutlineWidth", outlineWidth);
-        _instanceMat.SetColor("_OutlineColorBase", outlineColor);
+        m_InstanceMat.SetInt("_OutlineEnabled", active ? 1 : 0);
+        m_InstanceMat.SetFloat("_OutlineWidth", outlineWidth);
+        m_InstanceMat.SetColor("_OutlineColorBase", outlineColor);
     }
 
-    // 选中物品（外部调用）
     public void Select()
     {
         isSelected = true;
-        SetOutlineActive(true); // 显示描边
-        // 只有开启勺子显示时，才显示勺子
-        if (showSpoon && _spoonInstance != null)
+        SetOutlineActive(true);
+        if (showSpoon && m_SpoonInstance != null)
         {
-            _spoonInstance.SetActive(true);
+            m_SpoonInstance.SetActive(true);
         }
     }
 
-    // 取消选中（外部调用）
     public void Deselect()
     {
         isSelected = false;
-        SetOutlineActive(false); // 隐藏描边
-        // 只有开启勺子显示时，才隐藏勺子
-        if (showSpoon && _spoonInstance != null)
+        SetOutlineActive(false);
+        if (showSpoon && m_SpoonInstance != null)
         {
-            _spoonInstance.SetActive(false);
+            m_SpoonInstance.SetActive(false);
         }
     }
     #endregion

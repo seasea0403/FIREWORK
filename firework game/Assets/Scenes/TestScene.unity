@@ -181,14 +181,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -232,7 +232,7 @@ MonoBehaviour:
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -400,6 +400,8 @@ GameObject:
   m_Component:
   - component: {fileID: 27354235}
   - component: {fileID: 27354236}
+  - component: {fileID: 27354237}
+  - component: {fileID: 27354238}
   m_Layer: 0
   m_Name: Fuse_Thin
   m_TagString: Untagged
@@ -442,7 +444,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 828ad6cf4b485c240a536eb30e3a7c82, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -474,6 +476,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &27354237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27354234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireworkComponent: 3
+  outlineWidth: 3
+  outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
+  showSpoon: 0
+  spoonPrefab: {fileID: 0}
+  spoonOffset: {x: 0, y: 0.5, z: 0}
+  isSelected: 0
+--- !u!61 &27354238
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27354234}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 3.774064, y: -3.9346647}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 51.59, y: 10.806694}
+    newSize: {x: 51.59, y: 10.806694}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.0453472, y: 2.9373646}
+  m_EdgeRadius: 0
 --- !u!1 &85008375
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,10 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 4
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 4
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -1742,10 +1805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 2
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -2003,7 +2063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &268119766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2225,10 +2285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 3
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 20
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -2761,7 +2818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &394326950
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2864,7 +2921,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &425870314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3296,10 +3353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 2
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 9
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -3425,10 +3479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 5
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -3567,7 +3618,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.32, y: 0.1, z: -10}
+  m_LocalPosition: {x: -16.32, y: 0.1, z: -10}
   m_LocalScale: {x: 1.0795, y: 1.0795, z: 1.0795}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3952,7 +4003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &557815295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4309,7 +4360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &622610975
 Transform:
   m_ObjectHideFlags: 0
@@ -4521,10 +4572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 5
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 8
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -4548,7 +4596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &687420785
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4842,14 +4890,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4862,7 +4910,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -4893,7 +4941,7 @@ MonoBehaviour:
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -5015,10 +5063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 5
-  beadColor: 0
-  shellShape: 2
-  coverColor: 0
+  fireworkComponent: 13
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -5168,10 +5213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 6
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 18
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -5277,6 +5319,7 @@ MonoBehaviour:
   compressDuration: 0.5
   stackRoot: {fileID: 2139648228}
   compressedContent: {fileID: 5560094296023441457, guid: c70b3d5df57ac594f8a065e5e14832e5, type: 3}
+  paperTube: {fileID: 1766200273}
   packageAreaX: 7.5
   moveDuration: 1
 --- !u!1 &794126691
@@ -5685,13 +5728,13 @@ MonoBehaviour:
   m_text: "\u5F00\u59CB\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4280821802
   m_fontColor: {r: 0.16352195, g: 0.15580863, b: 0.15580863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5735,7 +5778,7 @@ MonoBehaviour:
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -5759,6 +5802,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838347008}
   m_CullTransparentMesh: 1
+--- !u!1 &838402534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 838402538}
+  - component: {fileID: 838402537}
+  - component: {fileID: 838402536}
+  - component: {fileID: 838402535}
+  m_Layer: 0
+  m_Name: GameManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &838402535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838402534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47bd76a8f7d1cb4d84618dc914562c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &838402536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838402534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8246f4aa80f6c04488e8edbf6410783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guestSpriteObject: {fileID: 0}
+  guestNameText: {fileID: 0}
+  guestDemandText: {fileID: 0}
+  guestUIRoot: {fileID: 0}
+  currentGuest: {fileID: 11400000, guid: 3768521abec037a4a96f6fe0eb62c688, type: 2}
+  day1Guests:
+  - {fileID: 11400000, guid: 3768521abec037a4a96f6fe0eb62c688, type: 2}
+  - {fileID: 11400000, guid: 2fd1a709768230a4daa336a2e0acdca7, type: 2}
+  - {fileID: 11400000, guid: 76cc023c2b551d24298f583cfb41de30, type: 2}
+--- !u!114 &838402537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838402534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389ee076ed00f8745a04b089879e7b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState:
+    currentDay: 0
+    totalGoodReviews: 0
+    fragmentCount: 0
+    unlockedComponents: 
+    isCurrentDayCompleted: 0
+--- !u!4 &838402538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838402534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -32.767635, y: 1.1457114, z: 0.02609677}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &842982252
 GameObject:
   m_ObjectHideFlags: 0
@@ -7179,10 +7307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 3
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 7
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -8147,10 +8272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 6
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 17
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -9149,10 +9271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 5
-  beadColor: 0
-  shellShape: 1
-  coverColor: 0
+  fireworkComponent: 12
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -9358,7 +9477,7 @@ RectTransform:
   m_Father: {fileID: 1620259547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.2, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 1.300003, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9816,8 +9935,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -4.7948, y: 0.4416}
+  m_SizeDelta: {x: 150.4105, y: 29.1168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1553674566
 GameObject:
@@ -10399,10 +10518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 5
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 11
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -10513,14 +10629,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -10533,7 +10649,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -10564,7 +10680,7 @@ MonoBehaviour:
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -11011,16 +11127,20 @@ MonoBehaviour:
   powderIn3Prefab: {fileID: 1187577127865456375, guid: df3eba32dab21c243941aa48169f5bc6, type: 3}
   beadInRedPrefab: {fileID: 1187577127865456375, guid: 58f5ac559e869a24b8a4c477aaeec4d6, type: 3}
   beadInBluePrefab: {fileID: 1187577127865456375, guid: 6bce95393fca1f047a94815468c111f4, type: 3}
-  beadInGoldPrefab: {fileID: 1187577127865456375, guid: 6c38165e70543884bbcac3de6b64abfd, type: 3}
   beadInGreenPrefab: {fileID: 1187577127865456375, guid: 4a0ee7d3ef4345d40b52d677434dd255, type: 3}
-  beadInLightBluePrefab: {fileID: 1187577127865456375, guid: 21de28ecf34ead74db1075bef5ee6650, type: 3}
   beadInPurplePrefab: {fileID: 1187577127865456375, guid: 080cb3da36193574f8d60b2162491079, type: 3}
-  clay1Prefab: {fileID: 8286174626050675080, guid: 7fb0acba363b2cc47acce0038fa38d59, type: 3}
-  clay2Prefab: {fileID: 8286174626050675080, guid: 025db9a9fcdc27a4e9efdcff7a2eee8c, type: 3}
+  beadInGoldPrefab: {fileID: 1187577127865456375, guid: 6c38165e70543884bbcac3de6b64abfd, type: 3}
+  beadInSilverPrefab: {fileID: 1187577127865456375, guid: 21de28ecf34ead74db1075bef5ee6650, type: 3}
   fusePrefab: {fileID: 8286174626050675080, guid: 6f048ff34f194864c89308e135b2f8ce, type: 3}
   shellCylinderPrefab: {fileID: 1187577127865456375, guid: 69a0cf16d007e9f4897f9ba6aac9640a, type: 3}
   shellPyramidPrefab: {fileID: 1187577127865456375, guid: 284d18f6f3a3df94ca3e82413deb2327, type: 3}
   shellRoundPrefab: {fileID: 1187577127865456375, guid: 0099ffa79a6d4bf448f621b5c1a41a94, type: 3}
+  shellHeartPrefab: {fileID: 0}
+  shellEllipsePrefab: {fileID: 0}
+  paperRedPrefab: {fileID: 0}
+  paperYellowPrefab: {fileID: 0}
+  paperGreenPrefab: {fileID: 0}
+  partitionPrefab: {fileID: 0}
   stackRoot: {fileID: 2139648228}
   orderIncrement: 1
 --- !u!65 &1766200274
@@ -11607,10 +11727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 1
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -11736,10 +11853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 4
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 10
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -12176,10 +12290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 6
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 19
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 0
@@ -12449,10 +12560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  beadColor: 0
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 0
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -12544,6 +12652,8 @@ MonoBehaviour:
   tubeTargetScale: {x: 0.6, y: 0.6, z: 0.6}
   tubeTargetAlpha: 0.5
   tubeMoveDuration: 0.5
+  guestNameText: {fileID: 0}
+  guestDemandText: {fileID: 0}
 --- !u!61 &2007828662
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13013,7 +13123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2116168509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13235,10 +13345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7d7deb697c5174bbb2b74a7de34547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  beadColor: 1
-  shellShape: 0
-  coverColor: 0
+  fireworkComponent: 6
   outlineWidth: 3
   outlineColor: {r: 1, g: 0.84, b: 0, a: 1}
   showSpoon: 1
@@ -13412,3 +13519,4 @@ SceneRoots:
   - {fileID: 268119769}
   - {fileID: 1525398515}
   - {fileID: 794126695}
+  - {fileID: 838402538}
