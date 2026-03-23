@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 /// <summary>
 /// 客人管理器（继承泛型单例，全局唯一）
@@ -12,9 +13,9 @@ public class GuestManager : Singleton<GuestManager>
     [Tooltip("客人2D形象的GameObject（挂载SpriteRenderer，放场景特定位置）")]
     public GameObject guestSpriteObject; // 替换Image为承载SpriteRenderer的物体
     [Tooltip("显示客人名字的UI Text组件")]
-    public Text guestNameText;
+    public TMP_Text guestNameText;
     [Tooltip("显示客人需求的UI Text组件")]
-    public Text guestDemandText;
+    public TMP_Text guestDemandText;
     [Tooltip("客人UI根节点（名字+需求，可控制显示/隐藏）")]
     public GameObject guestUIRoot;
 

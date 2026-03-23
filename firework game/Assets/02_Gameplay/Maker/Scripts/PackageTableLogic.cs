@@ -11,9 +11,6 @@ public class PackageTableLogic : MonoBehaviour
     public float tubeTargetAlpha = 1f;
     public float tubeMoveDuration = 0.5f;
 
-    [Header("=== 客人需求UI ===")]
-    public Text guestNameText;
-    public Text guestDemandText;
 
     // 私有变量（加m_前缀）
     private bool m_IsTubeMoved = false;
@@ -44,8 +41,6 @@ public class PackageTableLogic : MonoBehaviour
             }
         }
 
-        // 初始化客人UI
-        UpdateGuestDemandUI();
     }
 
     /// <summary>
@@ -81,27 +76,7 @@ public class PackageTableLogic : MonoBehaviour
         }
 
         m_IsTubeMoved = true;
-        Debug.Log("纸筒已移动到工作台！");
-    }
-
-    /// <summary>
-    /// 更新客人需求UI
-    /// </summary>
-    public void UpdateGuestDemandUI()
-    {
-        if (guestNameText == null || guestDemandText == null) return;
-
-        GuestDemandSO currentGuest = GuestManager.Instance?.currentGuest;
-        if (currentGuest == null)
-        {
-            guestNameText.text = "暂无客人";
-            guestDemandText.text = "请等待客人到来...";
-            return;
-        }
-
-        // 显示客人信息
-        guestNameText.text = $"当前客人：{currentGuest.guestName}";
-        guestDemandText.text = $"需求：{currentGuest.demandDesc}";
+        Debug.Log("纸筒已移动");
     }
 
     /// <summary>
@@ -132,8 +107,6 @@ public class PackageTableLogic : MonoBehaviour
         // 重置标记
         m_IsTubeMoved = false;
 
-        // 更新客人UI
-        UpdateGuestDemandUI();
 
         Debug.Log("工作台已重置！");
     }
