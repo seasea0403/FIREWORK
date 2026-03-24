@@ -190,17 +190,4 @@ public class GuestManager : Singleton<GuestManager>
         }
         // 无对应形象则保留normalSprite
     }
-
-    /// <summary>
-    /// 手动设置客人形象的排序层（解决图层冲突）
-    /// </summary>
-    /// <param name="layerName">排序层名称</param>
-    /// <param name="order">排序顺序</param>
-    public void SetGuestSpriteLayer(string layerName, int order = 0)
-    {
-        if (m_GuestSpriteRenderer == null) return;
-        m_GuestSpriteRenderer.sortingLayerName = layerName;
-        m_GuestSpriteRenderer.sortingOrder = order;
-        Debug.Log($"客人形象排序层已设置：{layerName}，顺序：{order}");
-    }
 }
