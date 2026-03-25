@@ -11,9 +11,8 @@ public class GuestManager : Singleton<GuestManager>
     public TMP_Text guestNameText;
     public TMP_Text guestDemandText;
     public GameObject guestUIRoot;
-    // 🔥 新增：评价台词UI（在Inspector拖入一个TextMeshPro）
-    [Header("✅ 新增评价台词UI")]
-    public TMP_Text guestResultText;
+    // 🔥 新增：缓存根节点的CanvasGroup（控制整体透明度）
+    private CanvasGroup m_UIRootCanvasGroup;
 
     private SpriteRenderer m_GuestSpriteRenderer;
     public GuestDemandSO currentGuest;
@@ -29,10 +28,14 @@ public class GuestManager : Singleton<GuestManager>
                 m_GuestSpriteRenderer = guestSpriteObject.AddComponent<SpriteRenderer>();
         }
 
-        if (guestUIRoot != null) guestUIRoot.SetActive(false);
+        // 🔥 初始化：获取根节点的CanvasGroup
+        if (guestUIRoot != null)
+        {
+            m_UIRootCanvasGroup = guestUIRoot.GetComponent<CanvasGroup>();
+            // 默认隐藏根节点
+            guestUIRoot.SetActive(false);
+        }
         if (guestSpriteObject != null) guestSpriteObject.SetActive(false);
-        // 初始化隐藏台词
-        if (guestResultText != null) guestResultText.text = "";
 
         LoadDayGuests(1);
         Debug.Log("GuestManager初始化完成！");
@@ -63,24 +66,27 @@ public class GuestManager : Singleton<GuestManager>
         bool isHappy = result == JudgeResult.Perfect || result == JudgeResult.Good;
         SwitchGuestSprite(isHappy);
 
-        // 2. 显示对应台词
-        if (guestResultText != null)
+        // 🔥 核心修复：强制根节点 100% 不透明 + 显示
+        ShowUIRootCompletely();
+
+        // 显示对应台词
+        if (guestDemandText != null)
         {
             switch (result)
             {
                 case JudgeResult.Perfect:
-                    guestResultText.text = currentGuest.perfectText;
+                    guestDemandText.text = currentGuest.perfectText;
                     break;
                 case JudgeResult.Good:
-                    guestResultText.text = currentGuest.goodText;
+                    guestDemandText.text = currentGuest.goodText;
                     break;
                 case JudgeResult.Fail:
-                    guestResultText.text = currentGuest.failText;
+                    guestDemandText.text = currentGuest.failText;
                     break;
             }
         }
 
-        // 3. 发放报酬
+        // 发放报酬
         int reward = 0;
         switch (result)
         {
@@ -91,15 +97,32 @@ public class GuestManager : Singleton<GuestManager>
         GameManager.Instance.AddMoney(reward);
         Debug.Log($"获得报酬：{reward} 文钱");
 
-        // 4. 完美评价+特殊NPC → 发放碎片
+        // 完美评价+特殊NPC → 发放碎片
         if (result == JudgeResult.Perfect && currentGuest.isSpecialNPC && currentGuest.giveFragment)
         {
             GameManager.Instance.AddFragment();
             Debug.Log($"获得天宫录碎片 x{currentGuest.fragmentCount}");
         }
 
-        // 5. 延迟2秒 → 下一个客人
-        StartCoroutine(WaitNextGuest(2f));
+        // 延迟3秒 → 下一个客人
+        StartCoroutine(WaitNextGuest(3f));
+    }
+
+    /// <summary>
+    /// 🔥 强制显示UI根节点（透明度100%）
+    /// </summary>
+    private void ShowUIRootCompletely()
+    {
+        if (guestUIRoot != null)
+            guestUIRoot.SetActive(true);
+
+        // 强制根节点完全不透明，解决根节点透明问题
+        if (m_UIRootCanvasGroup != null)
+        {
+            m_UIRootCanvasGroup.alpha = 1f;
+            m_UIRootCanvasGroup.interactable = true;
+            m_UIRootCanvasGroup.blocksRaycasts = true;
+        }
     }
 
     /// <summary>
@@ -108,7 +131,9 @@ public class GuestManager : Singleton<GuestManager>
     private IEnumerator WaitNextGuest(float delay)
     {
         yield return new WaitForSeconds(delay);
-        guestResultText.text = ""; // 清空台词
+        if (guestDemandText != null)
+            guestDemandText.text = "";
+
         NextGuest();
     }
 
@@ -149,17 +174,16 @@ public class GuestManager : Singleton<GuestManager>
             }
         }
 
-        if (guestUIRoot != null) guestUIRoot.SetActive(true);
+        // 刷新客人信息时，也强制显示根节点
+        ShowUIRootCompletely();
         if (guestNameText != null) guestNameText.text = currentGuest.guestName;
         if (guestDemandText != null) guestDemandText.text = currentGuest.demandDesc;
-        if (guestResultText != null) guestResultText.text = "";
     }
 
     private void HideGuestDisplay()
     {
         if (guestSpriteObject != null) { guestSpriteObject.SetActive(false); }
-        if (guestUIRoot != null) guestUIRoot.SetActive(false);
-        if (guestResultText != null) guestResultText.text = "";
+        if (guestUIRoot != null) { guestUIRoot.SetActive(false); }
     }
 
     public void SwitchGuestSprite(bool isHappy)
