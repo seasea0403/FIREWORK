@@ -33,6 +33,7 @@ public class GameState
         // 第一天默认解锁的基础组件（按策划的新手引导配置）
         UnlockComponent(FireworkComponent.NormalPowder);
         UnlockComponent(FireworkComponent.ShortFuse);
+        UnlockComponent(FireworkComponent.Clay);
         UnlockComponent(FireworkComponent.RedBead);
         UnlockComponent(FireworkComponent.BlueBead);
         UnlockComponent(FireworkComponent.GreenBead);

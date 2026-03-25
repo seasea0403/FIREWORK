@@ -34,6 +34,10 @@ public class PaperTube : MonoBehaviour
     public GameObject paperYellowPrefab;   // 黄色彩纸预制体
     public GameObject paperGreenPrefab;    // 绿色彩纸预制体
 
+    [Header("=== 粘土类预制体 ===")]
+    public GameObject clayPrefab1;      // 粘土预制体
+    public GameObject clayPrefab2;
+
     [Header("=== 隔板类预制体 ===")]
     public GameObject partitionPrefab;     // 隔板预制体（Day3解锁）
 
@@ -44,7 +48,7 @@ public class PaperTube : MonoBehaviour
     // 私有变量（加m_前缀，符合命名规范）
     private List<GameObject> m_StackedItems = new List<GameObject>();       // 已堆叠的物品实例
     private GameObject m_CurrentShellObj;                                  // 当前外壳实例
-    private Transform m_OriginalShellParent;                               // 外壳原始父节点
+    private SpriteRenderer m_TubeSpriteRenderer;
     private List<FireworkComponent> m_StackedFireworkComponents = new List<FireworkComponent>(); // 已堆叠的组件列表
     private Dictionary<ComponentCategory, FireworkComponent> m_CategoryComponentMap = new Dictionary<ComponentCategory, FireworkComponent>(); // 类别-组件映射（判定核心）
 
@@ -54,6 +58,9 @@ public class PaperTube : MonoBehaviour
 
     void Start()
     {
+        // 获取纸筒自身的SpriteRenderer
+        m_TubeSpriteRenderer = GetComponent<SpriteRenderer>();
+
         // 初始化堆叠根节点（防止空引用）
         if (stackRoot == null)
         {
@@ -157,6 +164,11 @@ public class PaperTube : MonoBehaviour
                 SpawnPartitionInStack();
                 break;
 
+            // 🧩 粘土类
+            case FireworkComponent.Clay:
+                SpawnClayInStack();
+                break;
+
             // ⚠️ 未配置的组件
             default:
                 Debug.LogWarning($"未配置组件{compType}的堆叠视觉效果！");
@@ -252,6 +264,33 @@ public class PaperTube : MonoBehaviour
     /// <summary>
     /// 生成引线堆叠视觉效果
     /// </summary>
+    private void SpawnClayInStack()
+    {
+        if (clayPrefab1 == null)
+        {
+            Debug.LogError("未绑定粘土预制体！");
+            return;
+        }
+
+        int currentMaxOrder = GetCurrentMaxOrder();
+        GameObject clay1 = Instantiate(clayPrefab1, stackRoot);
+        clay1.transform.localPosition = Vector3.zero;
+        if (clay1.TryGetComponent<SpriteRenderer>(out var sr1))
+        {
+            sr1.sortingOrder = currentMaxOrder + orderIncrement;
+        }
+        m_StackedItems.Add(clay1);
+        GameObject clay2 = Instantiate(clayPrefab2, stackRoot);
+        clay2.transform.localPosition = Vector3.zero;
+        if (clay2.TryGetComponent<SpriteRenderer>(out var sr2))
+        {
+            sr2.sortingOrder = currentMaxOrder + orderIncrement;
+        }
+        m_StackedItems.Add(clay2);
+        Debug.Log($"生成粘土堆叠，当前数量：{m_StackedItems.Count}");
+    }
+
+
     private void SpawnFuseInStack()
     {
         if (fusePrefab == null)
@@ -271,16 +310,23 @@ public class PaperTube : MonoBehaviour
         Debug.Log($"生成引线堆叠，当前数量：{m_StackedItems.Count}");
     }
 
+
     /// <summary>
-    /// 生成外壳堆叠视觉效果（外壳特殊：覆盖整个纸筒）
+    /// 生成外壳堆叠视觉效果（外壳特殊：覆盖整个纸筒，隐藏所有内部零件）
     /// </summary>
     private void SpawnShellStack(FireworkComponent shellType)
     {
-        // 销毁旧外壳（同一时间只能有一个外壳）
+        // 1. 销毁旧外壳（切换外壳用）
         if (m_CurrentShellObj != null)
         {
             Destroy(m_CurrentShellObj);
             m_StackedItems.Remove(m_CurrentShellObj);
+            m_CurrentShellObj = null;
+        }
+
+        if (m_TubeSpriteRenderer != null)
+        {
+            m_TubeSpriteRenderer.enabled = false;
         }
 
         // 匹配对应形状外壳预制体
@@ -297,29 +343,26 @@ public class PaperTube : MonoBehaviour
                 return;
         }
 
-        // 生成新外壳实例
+        // 生成新外壳
         if (targetPrefab != null)
         {
-            int currentMaxOrder = GetCurrentMaxOrder();
-            m_CurrentShellObj = Instantiate(targetPrefab, stackRoot);
+            // 🔥 核心：隐藏 stackRoot → 所有内部零件（火药/彩珠/引线）全部隐藏！
+            stackRoot.gameObject.SetActive(false);
+
+            // 外壳生成在 纸筒根节点（和stackRoot同级，不会被隐藏）
+            m_CurrentShellObj = Instantiate(targetPrefab, transform);
             m_CurrentShellObj.transform.localPosition = Vector3.zero;
 
-            // 外壳层级最高（+10确保覆盖其他组件）
+            // 外壳层级最高
             if (m_CurrentShellObj.TryGetComponent<SpriteRenderer>(out var sr))
             {
-                sr.sortingOrder = currentMaxOrder + 10;
+                sr.sortingOrder = 100; // 固定最高层级，确保覆盖
             }
 
-            // 记录外壳父节点，用于重置
-            m_OriginalShellParent = m_CurrentShellObj.transform.parent;
-            // 外壳独立父节点（避免被其他组件遮挡）
-            m_CurrentShellObj.transform.parent = null;
-            // 隐藏纸筒本体，显示外壳
-            gameObject.SetActive(false);
             m_CurrentShellObj.SetActive(true);
-
             m_StackedItems.Add(m_CurrentShellObj);
-            Debug.Log($"生成{shellType}外壳，纸筒已隐藏");
+
+            Debug.Log($"生成{shellType}外壳，内部零件已全部隐藏");
         }
         else
         {
@@ -434,7 +477,6 @@ public class PaperTube : MonoBehaviour
         {
             Destroy(m_CurrentShellObj);
             m_CurrentShellObj = null;
-            m_OriginalShellParent = null;
         }
 
         // 2. 销毁所有堆叠物品实例
