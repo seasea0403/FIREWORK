@@ -15,6 +15,9 @@ public class GameState
 
     [Tooltip("天宫录碎片数（目标3块，用于通关）")]
     public int fragmentCount = 0;
+    
+    [Tooltip("总金币数）")]
+    public int money;
 
     [Tooltip("已解锁的组件（true=已解锁，对应FireworkComponent枚举）")]
     public bool[] unlockedComponents;

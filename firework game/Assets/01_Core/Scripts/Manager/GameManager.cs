@@ -23,6 +23,14 @@ public class GameManager : Singleton<GameManager>
 
     #region 状态操作方法（封装GameState的操作，外部统一调用）
     /// <summary>
+    /// 增加金币（客人交付奖励）
+    /// </summary>
+    public void AddMoney(int value)
+    {
+        gameState.money += value;
+        Debug.Log($"【全局状态】获得金币：{value}，当前总金币：{gameState.money}");
+    }
+    /// <summary>
     /// 增加好评数（全局调用）
     /// </summary>
     public void AddGoodReview()

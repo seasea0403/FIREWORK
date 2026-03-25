@@ -38,7 +38,7 @@ public class FireworkDeliverDrag : MonoBehaviour
         _isDragging = false;
 
         // --------------------------
-        // 🔥 关键修复：忽略自己，只检测别人
+        //忽略自己，只检测别人
         // --------------------------
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f);
 
@@ -52,7 +52,7 @@ public class FireworkDeliverDrag : MonoBehaviour
 
             if (hit.CompareTag("Customer"))
             {
-                Debug.Log("✅ 成功交付给客户！");
+                Debug.Log("成功交付给客户！");
 
                 Customer customer = hit.GetComponent<Customer>();
                 if (customer != null)
