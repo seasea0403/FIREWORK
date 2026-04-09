@@ -15,7 +15,13 @@ public class UI_ToggleController : MonoBehaviour
     [Tooltip("要隐藏的UI面板列表")]
     public List<GameObject> panelsToHide = new List<GameObject>();
 
-    [Tooltip("要切换显隐的UI面板列表（点击时切换）")]
+    [Tooltip("互斥切换组A（可反复切换，与B互斥）")]
+    public List<GameObject> toggleGroupA = new List<GameObject>();
+
+    [Tooltip("互斥切换组B（可反复切换，与A互斥）")]
+    public List<GameObject> toggleGroupB = new List<GameObject>();
+
+    [Tooltip("要切换显隐的UI面板列表（简单单独切换）")]
     public List<GameObject> panelsToToggle = new List<GameObject>();
 
     [Header("🔧 扩展配置（可选）")]
@@ -24,6 +30,9 @@ public class UI_ToggleController : MonoBehaviour
 
     [Tooltip("隐去动画时长，为了避免本身隐去引起bug")]
     public float hideDuration = 0.3f;
+
+    // 记录互斥组当前状态（true=显示A隐藏B，false=显示B隐藏A）
+    private bool _toggleGroupAActive = true;
 
     // 缓存CanvasGroup（用于淡入淡出动画）
     private Dictionary<GameObject, CanvasGroup> _canvasGroups = new Dictionary<GameObject, CanvasGroup>();
@@ -41,6 +50,9 @@ public class UI_ToggleController : MonoBehaviour
         var allPanels = new HashSet<GameObject>();
         allPanels.UnionWith(panelsToShow);
         allPanels.UnionWith(panelsToHide);
+        allPanels.UnionWith(toggleGroupA);
+        allPanels.UnionWith(toggleGroupB);
+        allPanels.UnionWith(panelsToToggle);
 
         foreach (var panel in allPanels)
         {
@@ -55,9 +67,9 @@ public class UI_ToggleController : MonoBehaviour
             }
         }
 
-        if (panelsToShow.Count == 0 && panelsToHide.Count == 0)
+        if (panelsToShow.Count == 0 && panelsToHide.Count == 0 && toggleGroupA.Count == 0 && toggleGroupB.Count == 0 && panelsToToggle.Count == 0)
         {
-            Debug.LogWarning($"[{gameObject.name}] 未配置任何UI面板！请在panelsToShow或panelsToHide中添加面板");
+            Debug.LogWarning($"[{gameObject.name}] 未配置任何UI面板！请在相应列表中添加面板");
         }
     }
 
@@ -71,11 +83,10 @@ public class UI_ToggleController : MonoBehaviour
         {
             if (panel != null && panel.activeSelf)
             {
-                // 检查是否要隐藏按钮本身所在的面板
                 bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
                 if (isHidingSelfPanel && _button != null)
                 {
-                    _button.interactable = false; // 先禁用交互，防止动画中断
+                    _button.interactable = false;
                 }
                 HidePanel(panel);
             }
@@ -90,18 +101,69 @@ public class UI_ToggleController : MonoBehaviour
             }
         }
 
-        // 切换面板
+        // 互斥切换组：在A和B之间切换
+        if (toggleGroupA.Count > 0 || toggleGroupB.Count > 0)
+        {
+            if (_toggleGroupAActive)
+            {
+                // 当前显示A，切换到显示B
+                foreach (var panel in toggleGroupA)
+                {
+                    if (panel != null && panel.activeSelf)
+                    {
+                        bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
+                        if (isHidingSelfPanel && _button != null)
+                        {
+                            _button.interactable = false;
+                        }
+                        HidePanel(panel);
+                    }
+                }
+                foreach (var panel in toggleGroupB)
+                {
+                    if (panel != null && !panel.activeSelf)
+                    {
+                        ShowPanel(panel);
+                    }
+                }
+            }
+            else
+            {
+                // 当前显示B，切换到显示A
+                foreach (var panel in toggleGroupB)
+                {
+                    if (panel != null && panel.activeSelf)
+                    {
+                        bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
+                        if (isHidingSelfPanel && _button != null)
+                        {
+                            _button.interactable = false;
+                        }
+                        HidePanel(panel);
+                    }
+                }
+                foreach (var panel in toggleGroupA)
+                {
+                    if (panel != null && !panel.activeSelf)
+                    {
+                        ShowPanel(panel);
+                    }
+                }
+            }
+            _toggleGroupAActive = !_toggleGroupAActive; // 切换状态
+        }
+
+        // 独立切换面板
         foreach (var panel in panelsToToggle)
         {
             if (panel != null)
             {
                 if (panel.activeSelf)
                 {
-                    // 检查是否要隐藏按钮本身所在的面板
                     bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
                     if (isHidingSelfPanel && _button != null)
                     {
-                        _button.interactable = false; // 先禁用交互，防止动画中断
+                        _button.interactable = false;
                     }
                     HidePanel(panel);
                 }
