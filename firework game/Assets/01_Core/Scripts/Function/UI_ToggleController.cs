@@ -9,40 +9,55 @@ using System.Collections.Generic; // 用于otherPanelsToHide的List
 public class UI_ToggleController : MonoBehaviour
 {
     [Header("📌 核心配置")]
-    [Tooltip("要控制显隐的UI面板（拖入面板根节点）")]
-    public GameObject targetUIPanel;
+    [Tooltip("要显示的UI面板列表")]
+    public List<GameObject> panelsToShow = new List<GameObject>();
 
-    [Tooltip("控制类型：0=切换显隐 1=仅显示 2=仅隐藏")]
-    public int controlType = 0; // 默认切换
+    [Tooltip("要隐藏的UI面板列表")]
+    public List<GameObject> panelsToHide = new List<GameObject>();
+
+    [Tooltip("要切换显隐的UI面板列表（点击时切换）")]
+    public List<GameObject> panelsToToggle = new List<GameObject>();
 
     [Header("🔧 扩展配置（可选）")]
-    [Tooltip("是否隐藏其他面板（比如打开A时关闭B/C）")]
-    public bool hideOtherPanels = false;
-    [Tooltip("需要互斥的其他面板列表（仅hideOtherPanels=true时生效）")]
-    public List<GameObject> otherPanelsToHide;
+    [Tooltip("操作动画时长")]
+    public float showDuration = 0.2f;
 
-    [Tooltip("显隐动画时长（0=无动画）")]
-    public float animateDuration = 0.2f;
+    [Tooltip("隐去动画时长，为了避免本身隐去引起bug")]
+    public float hideDuration = 0.3f;
 
-    // 缓存目标面板的CanvasGroup（用于淡入淡出动画）
-    private CanvasGroup _canvasGroup;
+    // 缓存CanvasGroup（用于淡入淡出动画）
+    private Dictionary<GameObject, CanvasGroup> _canvasGroups = new Dictionary<GameObject, CanvasGroup>();
+    
+    // 当前正在隐藏的协程，用于当隐藏按钮本身时禁用交互
+    private Coroutine _currentHideCoroutine;
+    private Button _button;
 
     void Awake()
     {
-        // 自动获取CanvasGroup（没有则添加），用于动画
-        if (targetUIPanel != null)
+        // 获取Button组件
+        _button = GetComponent<Button>();
+
+        // 自动获取或添加所有目标面板的CanvasGroup
+        var allPanels = new HashSet<GameObject>();
+        allPanels.UnionWith(panelsToShow);
+        allPanels.UnionWith(panelsToHide);
+
+        foreach (var panel in allPanels)
         {
-            _canvasGroup = targetUIPanel.GetComponent<CanvasGroup>();
-            if (_canvasGroup == null && animateDuration > 0)
+            if (panel != null)
             {
-                _canvasGroup = targetUIPanel.AddComponent<CanvasGroup>();
+                CanvasGroup cg = panel.GetComponent<CanvasGroup>();
+                if (cg == null)
+                {
+                    cg = panel.AddComponent<CanvasGroup>();
+                }
+                _canvasGroups[panel] = cg;
             }
         }
 
-        // 空值保护
-        if (targetUIPanel == null)
+        if (panelsToShow.Count == 0 && panelsToHide.Count == 0)
         {
-            Debug.LogWarning($"[{gameObject.name}] 未绑定目标UI面板！");
+            Debug.LogWarning($"[{gameObject.name}] 未配置任何UI面板！请在panelsToShow或panelsToHide中添加面板");
         }
     }
 
@@ -51,39 +66,50 @@ public class UI_ToggleController : MonoBehaviour
     /// </summary>
     public void ToggleUI()
     {
-        if (targetUIPanel == null) return;
-
-        // 扩展：互斥隐藏其他面板
-        if (hideOtherPanels && otherPanelsToHide != null)
+        // 隐藏面板
+        foreach (var panel in panelsToHide)
         {
-            foreach (var panel in otherPanelsToHide)
+            if (panel != null && panel.activeSelf)
             {
-                if (panel != null && panel.activeSelf)
+                // 检查是否要隐藏按钮本身所在的面板
+                bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
+                if (isHidingSelfPanel && _button != null)
                 {
-                    HidePanel(panel);
+                    _button.interactable = false; // 先禁用交互，防止动画中断
                 }
+                HidePanel(panel);
             }
         }
 
-        // 核心：根据控制类型执行操作
-        switch (controlType)
+        // 显示面板
+        foreach (var panel in panelsToShow)
         {
-            case 0: // 切换显隐
-                if (targetUIPanel.activeSelf)
+            if (panel != null && !panel.activeSelf)
+            {
+                ShowPanel(panel);
+            }
+        }
+
+        // 切换面板
+        foreach (var panel in panelsToToggle)
+        {
+            if (panel != null)
+            {
+                if (panel.activeSelf)
                 {
-                    HidePanel(targetUIPanel);
+                    // 检查是否要隐藏按钮本身所在的面板
+                    bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
+                    if (isHidingSelfPanel && _button != null)
+                    {
+                        _button.interactable = false; // 先禁用交互，防止动画中断
+                    }
+                    HidePanel(panel);
                 }
                 else
                 {
-                    ShowPanel(targetUIPanel);
+                    ShowPanel(panel);
                 }
-                break;
-            case 1: // 仅显示
-                ShowPanel(targetUIPanel);
-                break;
-            case 2: // 仅隐藏
-                HidePanel(targetUIPanel);
-                break;
+            }
         }
     }
 
@@ -92,12 +118,19 @@ public class UI_ToggleController : MonoBehaviour
     /// </summary>
     private void ShowPanel(GameObject panel)
     {
-        panel.SetActive(true);
-        if (_canvasGroup != null && animateDuration > 0)
+        if (!_canvasGroups.ContainsKey(panel))
         {
-            _canvasGroup.alpha = 0;
-            // 无插件：启用协程淡入
-            StartCoroutine(FadeIn());
+            Debug.LogWarning($"[{gameObject.name}] 面板 {panel.name} 未初始化CanvasGroup");
+            panel.SetActive(true);
+            return;
+        }
+
+        // 激活面板及所有子物体
+        SetPanelActive(panel, true);
+        
+        if (showDuration > 0)
+        {
+            StartCoroutine(FadeIn(panel));
         }
     }
 
@@ -106,41 +139,170 @@ public class UI_ToggleController : MonoBehaviour
     /// </summary>
     private void HidePanel(GameObject panel)
     {
-        if (_canvasGroup != null && animateDuration > 0)
+        if (!_canvasGroups.ContainsKey(panel))
         {
-            // 无插件：启用协程淡出
-            StartCoroutine(FadeOut(panel));
+            Debug.LogWarning($"[{gameObject.name}] 面板 {panel.name} 未初始化CanvasGroup");
+            panel.SetActive(false);
+            return;
+        }
+
+        if (hideDuration > 0)
+        {
+            _currentHideCoroutine = StartCoroutine(FadeOut(panel));
         }
         else
         {
-            panel.SetActive(false);
+            SetPanelActive(panel, false);
         }
     }
 
-    // 🌟 修复核心：非泛型IEnumerator（Unity协程专用）
-    IEnumerator FadeIn()
+    /// <summary>
+    /// 递归激活/禁用面板及其所有子物体，并恢复/隐藏CanvasGroup
+    /// </summary>
+    private void SetPanelActive(GameObject panel, bool active)
     {
+        if (panel == null) return;
+
+        // 激活/禁用主面板
+        if (panel.activeSelf != active)
+        {
+            panel.SetActive(active);
+        }
+
+        // 递归激活/禁用所有子物体
+        foreach (Transform child in panel.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.gameObject != panel)
+            {
+                if (child.gameObject.activeSelf != active)
+                {
+                    child.gameObject.SetActive(active);
+                }
+            }
+        }
+
+        // 恢复/隐藏所有子物体的CanvasGroup alpha
+        CanvasGroup[] childCanvasGroups = panel.GetComponentsInChildren<CanvasGroup>(true);
+        foreach (var cg in childCanvasGroups)
+        {
+            if (cg != null)
+            {
+                cg.alpha = active ? 1 : 0;
+            }
+        }
+    }
+
+    // 🌟 淡入动画：从透明度0到1，包括所有子物体
+    IEnumerator FadeIn(GameObject panel)
+    {
+        CanvasGroup cg = _canvasGroups[panel];
+        CanvasGroup[] childCanvasGroups = panel.GetComponentsInChildren<CanvasGroup>(true);
+        
+        // 初始化为0
+        cg.alpha = 0;
+        foreach (var childCg in childCanvasGroups)
+        {
+            if (childCg != null && childCg != cg)
+            {
+                childCg.alpha = 0;
+            }
+        }
+
         float t = 0;
-        while (t < animateDuration)
+        while (t < showDuration)
         {
             t += Time.deltaTime;
-            _canvasGroup.alpha = Mathf.Lerp(0, 1, t / animateDuration);
+            float alpha = Mathf.Lerp(0, 1, t / showDuration);
+            cg.alpha = alpha;
+            foreach (var childCg in childCanvasGroups)
+            {
+                if (childCg != null && childCg != cg)
+                {
+                    childCg.alpha = alpha;
+                }
+            }
             yield return null;
         }
-        _canvasGroup.alpha = 1;
+        
+        cg.alpha = 1;
+        foreach (var childCg in childCanvasGroups)
+        {
+            if (childCg != null && childCg != cg)
+            {
+                childCg.alpha = 1;
+            }
+        }
     }
 
-    // 🌟 修复核心：非泛型IEnumerator
+    // 🌟 淡出动画：从透明度1到0，完成后才SetActive(false)，包括所有子物体
     IEnumerator FadeOut(GameObject panel)
     {
+        CanvasGroup cg = _canvasGroups[panel];
+        CanvasGroup[] childCanvasGroups = panel.GetComponentsInChildren<CanvasGroup>(true);
+        
+        cg.alpha = 1;
+        foreach (var childCg in childCanvasGroups)
+        {
+            if (childCg != null && childCg != cg)
+            {
+                childCg.alpha = 1;
+            }
+        }
+
         float t = 0;
-        while (t < animateDuration)
+        while (t < hideDuration)
         {
             t += Time.deltaTime;
-            _canvasGroup.alpha = Mathf.Lerp(1, 0, t / animateDuration);
+            float alpha = Mathf.Lerp(1, 0, t / hideDuration);
+            cg.alpha = alpha;
+            foreach (var childCg in childCanvasGroups)
+            {
+                if (childCg != null && childCg != cg)
+                {
+                    childCg.alpha = alpha;
+                }
+            }
             yield return null;
         }
-        _canvasGroup.alpha = 0;
-        panel.SetActive(false);
+        
+        cg.alpha = 0;
+        foreach (var childCg in childCanvasGroups)
+        {
+            if (childCg != null && childCg != cg)
+            {
+                childCg.alpha = 0;
+            }
+        }
+        
+        SetPanelActive(panel, false);
+        
+        // 如果隐藏完成后，恢复按钮交互（如果之前被禁用）
+        if (_button != null && !panel.activeSelf)
+        {
+            _button.interactable = true;
+        }
+    }
+
+    /// <summary>
+    /// 切换单个面板的显隐状态
+    /// </summary>
+    public void TogglePanel(GameObject panel)
+    {
+        if (panel == null) return;
+
+        if (panel.activeSelf)
+        {
+            // 检查是否要隐藏按钮本身所在的面板
+            bool isHidingSelfPanel = (panel == gameObject || panel.transform.IsChildOf(panel.transform));
+            if (isHidingSelfPanel && _button != null)
+            {
+                _button.interactable = false;
+            }
+            HidePanel(panel);
+        }
+        else
+        {
+            ShowPanel(panel);
+        }
     }
 }
