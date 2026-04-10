@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7537809218232002621}
   - component: {fileID: 8660818387934093497}
   m_Layer: 0
-  m_Name: Item_Shell_Pyramid
+  m_Name: Item_Shell_Heart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 892261889
   m_SortingLayer: 4
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 8b7eaf662ee6a774dadbfa837bebfb07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83197cc3a2192ea42af31b2bf2a9d3a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -1,12 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 游戏全局管理器：管理游戏状态、天数切换、奖励、好评和碎片统计。
-/// 定义了核心函数：AddMoney、AddGoodReview、AddFragment、NextDay、ContinueToNextDay、UnlockDayComponent。
+/// 定义了核心函数：AddMoney、AddGoodReview、AddFragment、NextDay、ContinueToNextDay。
 /// </summary>
+[DefaultExecutionOrder(-100)] // 确保 GameManager 最先执行 Awake
 public class GameManager : Singleton<GameManager>
 {
-    // 核心：唯一的游戏状态实例（所有状态都存在这里，消除冗余）
+    [Header("初始解锁配置")]
+    public List<FireworkComponent> initialUnlockedComponents = new List<FireworkComponent>
+    {
+        FireworkComponent.NormalPowder,
+        FireworkComponent.ShortFuse,
+        FireworkComponent.Clay,
+        FireworkComponent.CylinderShell,
+        FireworkComponent.PyramidShell,
+        FireworkComponent.RoundShell,
+        FireworkComponent.RedPaper,
+        FireworkComponent.YellowPaper,
+        FireworkComponent.BluePaper,
+        FireworkComponent.GreenPaper
+    };
+
+    // 核心：唯一的游戏状态实例（运行时状态，不作为 Inspector 配置入口）
+    [HideInInspector]
     public GameState gameState;
 
     /// <summary>
@@ -18,7 +36,7 @@ public class GameManager : Singleton<GameManager>
 
         // 初始化GameState实例
         gameState = new GameState();
-        gameState.Init(); // 调用GameState的初始化方法
+        gameState.Init(initialUnlockedComponents); // 按配置初始化初始解锁组件
 
         Debug.Log("GameManager初始化完成！初始状态：" +
                   $"Day{(int)gameState.currentDay}，已解锁组件数：{gameState.unlockedComponents.Length}");
@@ -106,9 +124,6 @@ public class GameManager : Singleton<GameManager>
                 SettlementManager.Instance.ResetDayStats();
             }
 
-            // 可扩展：解锁新组件（比如Day2解锁高级火药）
-            UnlockDayComponent(gameState.currentDay);
-
             // 通知GuestManager加载新一天的客人
             if (GuestManager.Instance != null)
             {
@@ -129,25 +144,5 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    /// <summary>
-    /// 按天数解锁组件（扩展逻辑）
-    /// </summary>
-    private void UnlockDayComponent(GameDay day)
-    {
-        switch (day)
-        {
-            case GameDay.Day2:
-                gameState.UnlockComponent(FireworkComponent.PushPowder);
-                gameState.UnlockComponent(FireworkComponent.LongFuse);
-                Debug.Log("Day2解锁：高威力火药、长引线");
-                break;
-            case GameDay.Day3:
-                gameState.UnlockComponent(FireworkComponent.SilverBead);
-                gameState.UnlockComponent(FireworkComponent.HeartShell);
-                Debug.Log("Day3解锁：银珠、星形外壳");
-                break;
-                // 可继续扩展Day4/Day5的解锁逻辑
-        }
-    }
     #endregion
 }

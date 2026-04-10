@@ -30,12 +30,6 @@ public class PaperTube : MonoBehaviour
     public GameObject shellPyramidPrefab;  // 圆锥外壳预制体
     public GameObject shellRoundPrefab;    // 圆形外壳预制体
     public GameObject shellHeartPrefab;    // 心形外壳预制体（Day4解锁）
-    public GameObject shellEllipsePrefab;  // 椭圆外壳预制体（Day4解锁）
-
-    [Header("=== 彩纸类预制体 ===")]
-    public GameObject paperRedPrefab;      // 红色彩纸预制体
-    public GameObject paperYellowPrefab;   // 黄色彩纸预制体
-    public GameObject paperGreenPrefab;    // 绿色彩纸预制体
 
     [Header("=== 粘土类预制体 ===")]
     public GameObject clayPrefab1;      // 粘土预制体
@@ -52,6 +46,7 @@ public class PaperTube : MonoBehaviour
     private List<GameObject> m_StackedItems = new List<GameObject>();       // 已堆叠的物品实例
     private GameObject m_CurrentShellObj;                                  // 当前外壳实例
     private SpriteRenderer m_TubeSpriteRenderer;
+    private Color m_CurrentPaperColor = Color.white;                       // 当前彩纸颜色缓存
     private List<FireworkComponent> m_StackedFireworkComponents = new List<FireworkComponent>(); // 已堆叠的组件列表
     private Dictionary<ComponentCategory, FireworkComponent> m_CategoryComponentMap = new Dictionary<ComponentCategory, FireworkComponent>(); // 类别-组件映射（判定核心）
 
@@ -165,13 +160,13 @@ public class PaperTube : MonoBehaviour
             case FireworkComponent.PyramidShell:
             case FireworkComponent.RoundShell:
             case FireworkComponent.HeartShell:
-            case FireworkComponent.EllipseShell:
                 SpawnShellStack(compType);
                 break;
 
             // 🎨 彩纸类
             case FireworkComponent.RedPaper:
             case FireworkComponent.YellowPaper:
+            case FireworkComponent.BluePaper:
             case FireworkComponent.GreenPaper:
                 SpawnPaperInStack(compType);
                 break;
@@ -360,7 +355,6 @@ public class PaperTube : MonoBehaviour
             case FireworkComponent.PyramidShell: targetPrefab = shellPyramidPrefab; break;
             case FireworkComponent.RoundShell: targetPrefab = shellRoundPrefab; break;
             case FireworkComponent.HeartShell: targetPrefab = shellHeartPrefab; break;
-            case FireworkComponent.EllipseShell: targetPrefab = shellEllipsePrefab; break;
             default:
                 Debug.LogError($"无匹配的外壳预制体：{shellType}");
                 return;
@@ -385,6 +379,12 @@ public class PaperTube : MonoBehaviour
             m_CurrentShellObj.SetActive(true);
             m_StackedItems.Add(m_CurrentShellObj);
 
+            // 应用当前已选的彩纸颜色（先选彩纸再放外壳的情况）
+            if (m_CurrentShellObj.TryGetComponent<SpriteRenderer>(out var shellSr))
+            {
+                shellSr.color = m_CurrentPaperColor;
+            }
+
             Debug.Log($"生成{shellType}外壳，内部零件已全部隐藏");
         }
         else
@@ -394,40 +394,38 @@ public class PaperTube : MonoBehaviour
     }
 
     /// <summary>
-    /// 生成彩纸堆叠视觉效果
+    /// 修改包装颜色（彩纸效果）- 修改外壳克隆体的SpriteRenderer颜色
     /// </summary>
     private void SpawnPaperInStack(FireworkComponent paperType)
     {
-        GameObject targetPrefab = null;
+        // 缓存颜色（先选彩纸、后放外壳时用）
+        m_CurrentPaperColor = GetPaperColor(paperType);
 
-        // 匹配对应颜色彩纸预制体
-        switch (paperType)
+        // 如果外壳已存在，立即修改外壳克隆体颜色
+        if (m_CurrentShellObj != null)
         {
-            case FireworkComponent.RedPaper: targetPrefab = paperRedPrefab; break;
-            case FireworkComponent.YellowPaper: targetPrefab = paperYellowPrefab; break;
-            case FireworkComponent.GreenPaper: targetPrefab = paperGreenPrefab; break;
-            default:
-                Debug.LogError($"无匹配的彩纸预制体：{paperType}");
-                return;
-        }
-
-        // 生成彩纸实例
-        if (targetPrefab != null)
-        {
-            int currentMaxOrder = GetCurrentMaxOrder();
-            GameObject paper = Instantiate(targetPrefab, stackRoot);
-            paper.transform.localPosition = Vector3.zero;
-            if (paper.TryGetComponent<SpriteRenderer>(out var sr))
+            if (m_CurrentShellObj.TryGetComponent<SpriteRenderer>(out var sr))
             {
-                sr.sortingOrder = currentMaxOrder + orderIncrement;
+                sr.color = m_CurrentPaperColor;
             }
-            m_StackedItems.Add(paper);
-            Debug.Log($"生成{paperType}彩纸堆叠，当前数量：{m_StackedItems.Count}");
         }
-        else
+
+        Debug.Log($"包装颜色已修改为：{paperType}");
+    }
+
+    /// <summary>
+    /// 根据彩纸类型返回对应的颜色
+    /// </summary>
+    private Color GetPaperColor(FireworkComponent paperType)
+    {
+        return paperType switch
         {
-            Debug.LogError($"未绑定{paperType}彩纸预制体！");
-        }
+            FireworkComponent.RedPaper => new Color(1f, 0.5f, 0.5f, 1f),    // 浅红
+            FireworkComponent.YellowPaper => new Color(1f, 1f, 0f, 1f),    // 黄色
+            FireworkComponent.BluePaper => new Color(0.5f, 0.8f, 1f, 1f),  // 浅蓝
+            FireworkComponent.GreenPaper => new Color(0f, 1f, 0f, 1f),     // 绿色
+            _ => Color.white                                               // 默认白色
+        };
     }
 
     /// <summary>
@@ -502,7 +500,10 @@ public class PaperTube : MonoBehaviour
             m_CurrentShellObj = null;
         }
 
-        // 2. 销毁所有堆叠物品实例
+        // 2. 重置彩纸颜色缓存
+        m_CurrentPaperColor = Color.white;
+
+        // 3. 销毁所有堆叠物品实例
         foreach (var item in m_StackedItems)
         {
             if (item != null)
@@ -512,11 +513,11 @@ public class PaperTube : MonoBehaviour
         }
         m_StackedItems.Clear();
 
-        // 3. 清空组件和类别记录
+        // 4. 清空组件和类别记录
         m_StackedFireworkComponents.Clear();
         m_CategoryComponentMap.Clear();
 
-        Debug.Log("纸筒已清空，重置完成");
+        Debug.Log("纸筒已清空，颜色已重置为白色，重置完成");
     }
 
     /// <summary>

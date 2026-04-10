@@ -85,4 +85,11 @@ public class GuestDemandSO : ScriptableObject
 
     [Tooltip("碎片数量（默认1块）")]
     public int fragmentCount = 1;
+
+    [Header("🔓 完成后解锁的组件")]
+    [Tooltip("完成该客人后解锁的组件列表（比如完成某客人后解锁银珠、长引线等）")]
+    public List<FireworkComponent> unlockOnCompletion = new List<FireworkComponent>();
+
+    [Tooltip("是否仅在完美评价时解锁（不勾选则完成即解锁）")]
+    public bool unlockOnlyIfPerfect = false;
 }

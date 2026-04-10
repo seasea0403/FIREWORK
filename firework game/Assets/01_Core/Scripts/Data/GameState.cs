@@ -26,31 +26,26 @@ public class GameState
     public bool isCurrentDayCompleted = false;
 
     /// <summary>
-    /// 初始化游戏状态，将默认组件设为已解锁，并重置所有进度数据。
+    /// 初始化游戏状态，将指定组件设为已解锁，并重置所有进度数据。
     /// </summary>
-    public void Init()
+    public void Init(IEnumerable<FireworkComponent> initialUnlockedComponents = null)
     {
         // 初始化解锁数组，长度为所有组件枚举数量
         unlockedComponents = new bool[System.Enum.GetValues(typeof(FireworkComponent)).Length];
 
-        // 默认解锁基础组件
-        UnlockComponent(FireworkComponent.NormalPowder);
-        UnlockComponent(FireworkComponent.ShortFuse);
-        UnlockComponent(FireworkComponent.Clay);
-        UnlockComponent(FireworkComponent.RedBead);
-        UnlockComponent(FireworkComponent.BlueBead);
-        UnlockComponent(FireworkComponent.GreenBead);
-        UnlockComponent(FireworkComponent.GoldBead);
-        UnlockComponent(FireworkComponent.CylinderShell);
-        UnlockComponent(FireworkComponent.PyramidShell);
-        UnlockComponent(FireworkComponent.RoundShell);
-        UnlockComponent(FireworkComponent.RedPaper);
-        UnlockComponent(FireworkComponent.YellowPaper);
-        UnlockComponent(FireworkComponent.GreenPaper);
+        // 根据配置解锁初始组件
+        if (initialUnlockedComponents != null)
+        {
+            foreach (FireworkComponent component in initialUnlockedComponents)
+            {
+                UnlockComponent(component);
+            }
+        }
 
         // 重置统计数据
         totalGoodReviews = 0;
         fragmentCount = 0;
+        money = 0;
         currentDay = GameDay.Day1;
         isCurrentDayCompleted = false;
     }

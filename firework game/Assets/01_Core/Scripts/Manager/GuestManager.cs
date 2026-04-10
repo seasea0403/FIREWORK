@@ -15,8 +15,17 @@ public class GuestManager : Singleton<GuestManager>
     public TMP_Text guestNameText;
     public TMP_Text guestDemandText;
     public GameObject guestUIRoot;
+
+    [Header("倒计时配置")]
+    [Tooltip("倒计时UI文本（显示 1:30 格式）")]
+    public TMP_Text timerText;
+    [Tooltip("每个客人的倒计时时长（秒）")]
+    public float guestTimeLimit = 90f;
+
     //缓存根节点的CanvasGroup（控制整体透明度）
     private CanvasGroup m_UIRootCanvasGroup;
+    private float m_RemainingTime;
+    private Coroutine m_TimerCoroutine;
 
     private SpriteRenderer m_GuestSpriteRenderer;
     public GuestDemandSO currentGuest;
@@ -85,6 +94,7 @@ public class GuestManager : Singleton<GuestManager>
 
             currentGuest = dayGuests[0];
             UpdateGuestDisplay();
+            StartTimer();
             Debug.Log($"加载Day{day}的客人数据，共{dayGuests.Count}个客人");
         }
         else
@@ -100,6 +110,9 @@ public class GuestManager : Singleton<GuestManager>
     public void ShowJudgeResult(JudgeResult result)
     {
         if (currentGuest == null) return;
+
+        // 停止倒计时（玩家已提交，不再计时）
+        StopTimer();
 
         // 1. 切换表情
         bool isHappy = result == JudgeResult.Perfect || result == JudgeResult.Good;
@@ -122,6 +135,9 @@ public class GuestManager : Singleton<GuestManager>
                 case JudgeResult.Fail:
                     guestDemandText.text = currentGuest.failText;
                     break;
+                case JudgeResult.TimeOut:
+                    guestDemandText.text = currentGuest.timeoutText;
+                    break;
             }
         }
 
@@ -132,6 +148,7 @@ public class GuestManager : Singleton<GuestManager>
             case JudgeResult.Perfect: reward = currentGuest.perfectMoney; break;
             case JudgeResult.Good: reward = currentGuest.goodMoney; break;
             case JudgeResult.Fail: reward = currentGuest.failMoney; break;
+            case JudgeResult.TimeOut: reward = currentGuest.timeoutMoney; break;
         }
         GameManager.Instance.AddMoney(reward);
         // 同时更新结算管理器的当天收入统计
@@ -140,6 +157,40 @@ public class GuestManager : Singleton<GuestManager>
             SettlementManager.Instance.AddDayEarnings(reward);
         }
         Debug.Log($"获得报酬：{reward} 文钱");
+
+        // 🔓 完成该客人后检查并解锁组件
+        if (currentGuest != null && currentGuest.unlockOnCompletion.Count > 0)
+        {
+            // 判断是否满足解锁条件（仅Perfect,还是Good也可以）
+            bool shouldUnlock = false;
+            if (currentGuest.unlockOnlyIfPerfect && result == JudgeResult.Perfect)
+            {
+                shouldUnlock = true;
+            }
+            else if (!currentGuest.unlockOnlyIfPerfect && (result == JudgeResult.Perfect || result == JudgeResult.Good))
+            {
+                shouldUnlock = true;
+            }
+
+            if (shouldUnlock)
+            {
+                foreach (FireworkComponent component in currentGuest.unlockOnCompletion)
+                {
+                    GameManager.Instance.gameState.UnlockComponent(component);
+                    Debug.Log($"🔓 解锁组件：{component}");
+                }
+
+                // 刷新所有道具项的解锁状态（UI + 碰撞体）
+                ContentItem[] allItems = FindObjectsOfType<ContentItem>();
+                foreach (ContentItem item in allItems)
+                {
+                    item.RefreshUnlockState();
+                }
+
+                string unlockedList = string.Join(", ", currentGuest.unlockOnCompletion);
+                Debug.Log($"【组件解锁】客人 {currentGuest.guestName} 完成后解锁：{unlockedList}");
+            }
+        }
 
         // 完美评价+特殊NPC → 发放碎片
         if (result == JudgeResult.Perfect && currentGuest.isSpecialNPC && currentGuest.giveFragment)
@@ -177,6 +228,12 @@ public class GuestManager : Singleton<GuestManager>
         yield return new WaitForSeconds(delay);
         if (guestDemandText != null)
             guestDemandText.text = "";
+
+        // 切换客人前，将摄像机返回柜台区域
+        if (SimpleCameraMoveDOTween.Instance != null)
+        {
+            SimpleCameraMoveDOTween.Instance.MoveCameraToCounter();
+        }
 
         NextGuest();
     }
@@ -218,6 +275,7 @@ public class GuestManager : Singleton<GuestManager>
 
             currentGuest = currentDayGuests[currentIndex + 1];
             UpdateGuestDisplay();
+            StartTimer();
         }
         else
         {
@@ -271,4 +329,58 @@ public class GuestManager : Singleton<GuestManager>
         else if (!isHappy && currentGuest.angrySprite != null)
             m_GuestSpriteRenderer.sprite = currentGuest.angrySprite;
     }
+
+    #region 倒计时系统
+    /// <summary>
+    /// 启动倒计时，每个客人开始时调用
+    /// </summary>
+    private void StartTimer()
+    {
+        StopTimer();
+        m_RemainingTime = guestTimeLimit;
+        UpdateTimerDisplay();
+        m_TimerCoroutine = StartCoroutine(CountdownCoroutine());
+    }
+
+    /// <summary>
+    /// 停止倒计时
+    /// </summary>
+    private void StopTimer()
+    {
+        if (m_TimerCoroutine != null)
+        {
+            StopCoroutine(m_TimerCoroutine);
+            m_TimerCoroutine = null;
+        }
+    }
+
+    /// <summary>
+    /// 倒计时协程，每秒更新UI，归零时触发超时判定
+    /// </summary>
+    private IEnumerator CountdownCoroutine()
+    {
+        while (m_RemainingTime > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+            m_RemainingTime -= 1f;
+            if (m_RemainingTime < 0f) m_RemainingTime = 0f;
+            UpdateTimerDisplay();
+        }
+
+        // 时间耗尽，触发超时判定
+        Debug.Log("⬏ 时间耗尽，触发超时判定！");
+        ShowJudgeResult(JudgeResult.TimeOut);
+    }
+
+    /// <summary>
+    /// 更新倒计时UI显示（格式：1:30）
+    /// </summary>
+    private void UpdateTimerDisplay()
+    {
+        if (timerText == null) return;
+        int minutes = Mathf.FloorToInt(m_RemainingTime / 60f);
+        int seconds = Mathf.FloorToInt(m_RemainingTime % 60f);
+        timerText.text = $"{minutes}:{seconds:D2}";
+    }
+    #endregion
 }

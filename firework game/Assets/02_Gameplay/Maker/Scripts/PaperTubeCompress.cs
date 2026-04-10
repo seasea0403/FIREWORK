@@ -32,9 +32,11 @@ public class PaperTubeCompress : MonoBehaviour
     private GameObject m_SpawnedCompressedContent;
     private bool m_IsCompressed = false;
 
-    /// <summary>
-    /// 初始化压缩机状态，添加必要的碰撞检测组件并准备压缩显示对象。
-    /// </summary>
+    // 初始位置缓存
+    private float m_OriginalTopBarY;
+    private float m_OriginalBottomBarY;
+    private float m_OriginalCompressX;
+
     /// <summary>
     /// 初始化压缩机状态，添加必要的碰撞检测组件并准备压缩显示对象。
     /// </summary>
@@ -59,6 +61,17 @@ public class PaperTubeCompress : MonoBehaviour
             m_SpawnedCompressedContent.transform.localPosition = Vector3.zero;
             m_SpawnedCompressedContent.SetActive(false);
         }
+
+        // 𝐜 记录初始位置
+        if (slideBarTop != null)
+        {
+            m_OriginalTopBarY = slideBarTop.localPosition.y;
+        }
+        if (slideBarBottom != null)
+        {
+            m_OriginalBottomBarY = slideBarBottom.localPosition.y;
+        }
+        m_OriginalCompressX = transform.position.x;
     }
 
     /// <summary>
@@ -131,25 +144,23 @@ public class PaperTubeCompress : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// 重置压缩装置状态。
+    /// 重置压缩装置状态到初始位置。
     /// </summary>
     public void ResetState()
     {
         m_IsCompressed = false;
 
-        if (slideBarTop != null) slideBarTop.DOLocalMoveY(1f, 0.5f);
-        if (slideBarBottom != null) slideBarBottom.DOLocalMoveY(-1f, 0.5f);
+        // 先终止所有正在运行的动画，避免与复位动画冲突
+        transform.DOKill();
+        if (slideBarTop != null) slideBarTop.DOKill();
+        if (slideBarBottom != null) slideBarBottom.DOKill();
 
-        foreach (Transform child in stackRoot)
-        {
-            child.gameObject.SetActive(true);
-        }
-        if (m_SpawnedCompressedContent != null)
-        {
-            m_SpawnedCompressedContent.SetActive(false);
-        }
+        // 恢复压杆到初始位置
+        if (slideBarTop != null) slideBarTop.DOLocalMoveY(m_OriginalTopBarY, 0.5f);
+        if (slideBarBottom != null) slideBarBottom.DOLocalMoveY(m_OriginalBottomBarY, 0.5f);
 
-        transform.DOMoveX(0f, 0.5f);
+        // 恢复压缩机到初始X位置
+        transform.DOMoveX(m_OriginalCompressX, 0.5f);
     }
 }
 

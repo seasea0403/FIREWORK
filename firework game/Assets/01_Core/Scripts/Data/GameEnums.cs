@@ -34,8 +34,9 @@ public enum FireworkComponent
     Partition,       // 隔板（Day3解锁）
     RedPaper,        // 红色彩纸（基础组件）
     YellowPaper,     // 黄色彩纸（基础组件）
-    GreenPaper,       // 绿色彩纸（基础组件）
-    Clay             //粘土
+    BluePaper,       // 蓝色彩纸（基础组件）
+    GreenPaper,      // 绿色彩纸（基础组件）
+    Clay             // 粘土
 }
 
 /// <summary>
@@ -48,7 +49,7 @@ public enum ComponentCategory
     Fuse,               // 引线类（短/长引线）
     Bead,               // 彩珠类（红/蓝/绿/紫/金/银）
     Shell,              // 外壳类（圆柱/圆锥/圆形/心形/椭圆）
-    Paper,              // 彩纸类（红/黄/绿）
+    Paper,              // 彩纸类（红/黄/蓝/绿）
     Partition           // 隔板类（仅隔板）
 }
 
@@ -98,7 +99,7 @@ public static class ComponentCategoryHelper
             FireworkComponent.CylinderShell or FireworkComponent.PyramidShell or FireworkComponent.RoundShell or
             FireworkComponent.HeartShell or FireworkComponent.EllipseShell => ComponentCategory.Shell,
             // 彩纸类
-            FireworkComponent.RedPaper or FireworkComponent.YellowPaper or FireworkComponent.GreenPaper => ComponentCategory.Paper,
+            FireworkComponent.RedPaper or FireworkComponent.YellowPaper or FireworkComponent.BluePaper or FireworkComponent.GreenPaper => ComponentCategory.Paper,
             // 隔板类
             FireworkComponent.Partition => ComponentCategory.Partition,
             // 默认无类别（防止漏配组件）

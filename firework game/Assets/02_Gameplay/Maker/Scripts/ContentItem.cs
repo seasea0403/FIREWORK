@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 道具项组件：表示玩家可选材料，并管理选中、描边和勺子显示逻辑。
 /// </summary>
+[DefaultExecutionOrder(10)] // 确保在 GameManager(-100) 初始化之后执行
 public class ContentItem : MonoBehaviour
 {
     [Header("=== 爆竹组件 ===")]
@@ -56,6 +57,33 @@ public class ContentItem : MonoBehaviour
         if (showSpoon)
         {
             InitSpoon();
+        }
+    }
+
+    /// <summary>
+    /// 运行时刷新解锁状态（客人完成订单解锁新组件后调用）。
+    /// </summary>
+    public void RefreshUnlockState()
+    {
+        bool wasUnlocked = m_IsUnlocked;
+        m_IsUnlocked = FireworkComponentMapper.IsItemUnlocked(this);
+
+        // 从锁定变为解锁时，恢复正常显示
+        if (!wasUnlocked && m_IsUnlocked)
+        {
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = Color.white;
+            }
+            Collider2D collider = GetComponent<Collider2D>();
+            if (collider != null) collider.enabled = true;
+
+            InitMaterialInstance();
+            SetOutlineActive(false);
+            if (showSpoon) InitSpoon();
+
+            Debug.Log($"🔓 道具 {gameObject.name} 已解锁并刷新显示");
         }
     }
 

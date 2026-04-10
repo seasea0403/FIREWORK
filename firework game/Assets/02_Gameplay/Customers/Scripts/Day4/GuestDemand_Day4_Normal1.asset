@@ -34,3 +34,5 @@ MonoBehaviour:
   forbiddenCategoryAnyOne: 
   giveFragment: 0
   fragmentCount: 1
+  unlockOnCompletion: 0e000000
+  unlockOnlyIfPerfect: 0

@@ -19,7 +19,9 @@ public static class FireworkComponentMapper
     /// </summary>
     public static bool IsItemUnlocked(ContentItem item)
     {
-        if (item == null || GameManager.Instance == null) return true;
+        // 安全检查：如果管理器未初始化，默认不解锁（防止时序问题导致全部可用）
+        if (item == null) return false;
+        if (GameManager.Instance == null || GameManager.Instance.gameState == null) return false;
 
         FireworkComponent comp = MapToFireworkComponent(item);
         return GameManager.Instance.gameState.IsComponentUnlocked(comp);

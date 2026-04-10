@@ -6,6 +6,8 @@ using DG.Tweening;
 /// </summary>
 public class SimpleCameraMoveDOTween : MonoBehaviour
 {
+    public static SimpleCameraMoveDOTween Instance { get; private set; }
+
     [Header("摄像机设置")]
     public Camera mainCamera;
     public Vector3 CounterPosition; // 柜台位置
@@ -18,6 +20,7 @@ public class SimpleCameraMoveDOTween : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         _dragMove = mainCamera.GetComponent<CameraDragMove>();
     }
 
