@@ -4,7 +4,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// 每日结算管理器
+/// 每日结算管理器：负责显示当天结算页面、展示收入/好评/碎片统计，并处理继续按钮进入下一天。
+/// 定义了核心函数：ShowSettlement、HideSettlement、AddDayEarnings、AddDayGoodReview、ResetDayStats、UpdateSettlementUI、OnContinueButtonClicked。
 /// </summary>
 public class SettlementManager : Singleton<SettlementManager>
 {
@@ -22,6 +23,9 @@ public class SettlementManager : Singleton<SettlementManager>
     private int dayEarnings = 0;
     private int dayGoodReviews = 0;
 
+    /// <summary>
+    /// 初始化结算界面，隐藏结算面板并绑定继续按钮事件。
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();

@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 拖拽物体交付逻辑：玩家拖动烟花并将其投递给客户。
+/// </summary>
 public class FireworkDeliverDrag : MonoBehaviour
 {
     private Vector3 _originPos;
     private Camera _mainCam;
     private bool _isDragging = false;
 
+    /// <summary>
+    /// 初始化相机引用、记录原始位置，并确保对象具备刚体组件。
+    /// </summary>
     void Awake()
     {
         _mainCam = Camera.main;
@@ -20,11 +26,17 @@ public class FireworkDeliverDrag : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 鼠标按下时开始拖拽对象。
+    /// </summary>
     void OnMouseDown()
     {
         _isDragging = true;
     }
 
+    /// <summary>
+    /// 拖拽过程中将对象位置跟随鼠标世界坐标。
+    /// </summary>
     void OnMouseDrag()
     {
         if (!_isDragging) return;
@@ -33,6 +45,9 @@ public class FireworkDeliverDrag : MonoBehaviour
         transform.position = mouseWorldPos;
     }
 
+    /// <summary>
+    /// 松开鼠标时检测是否成功交付到客户，否则返回原位。
+    /// </summary>
     void OnMouseUp()
     {
         _isDragging = false;

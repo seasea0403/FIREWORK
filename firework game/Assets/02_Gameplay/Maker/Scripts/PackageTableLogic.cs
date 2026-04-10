@@ -2,6 +2,10 @@
 using DG.Tweening;
 using UnityEngine.UI;
 
+/// <summary>
+/// 纸筒工作台逻辑：负责现有纸筒的工作台移动、缩放、透明度动画，以及复位到原始状态。
+/// 定义了核心函数：MovePaperTubeToTable、ResetPackageTable。
+/// </summary>
 public class PackageTableLogic : MonoBehaviour
 {
     [Header("=== 纸筒配置 ===")]
@@ -19,6 +23,9 @@ public class PackageTableLogic : MonoBehaviour
     private Vector3 m_TubeOriginalScale;
     private Color m_TubeOriginalColor;
 
+    /// <summary>
+    /// 初始化现有纸筒参数并缓存原始位置、缩放和颜色。
+    /// </summary>
     void Start()
     {
         // 初始化纸筒参数

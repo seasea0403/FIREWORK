@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 相机拖动控制器：支持水平拖拽、边界限制和平滑跟随，适用于工作台视角切换场景。
+/// </summary>
 public class CameraDragMove : MonoBehaviour
 {
     [Header("=== 拖拽配置 ===")]
@@ -22,6 +25,9 @@ public class CameraDragMove : MonoBehaviour
     private Vector3 _lastMousePos;
     private Vector3 _targetCamPos;
 
+    /// <summary>
+    /// 每帧处理鼠标拖拽逻辑，并平滑移动摄像机位置。
+    /// </summary>
     void Update()
     {
         // 禁止条件：开关关闭 / 点击UI
@@ -51,18 +57,25 @@ public class CameraDragMove : MonoBehaviour
         SmoothMoveCamera();
     }
 
-    // 🔥 核心：动画完成后，调用这个方法开启拖拽
+    /// <summary>
+    /// 启用摄像机拖拽功能，通常在过渡动画结束后调用。
+    /// </summary>
     public void EnableDrag()
     {
         canDrag = true;
     }
 
-    // 关闭拖拽（跳柜台时调用）
+    /// <summary>
+    /// 关闭摄像机拖拽功能，常用于切换视角或进入UI界面时。
+    /// </summary>
     public void DisableDrag()
     {
         canDrag = false;
     }
 
+    /// <summary>
+    /// 处理拖拽时的鼠标偏移，并计算目标摄像机位置。
+    /// </summary>
     private void DragCamera()
     {
         Vector3 currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -77,11 +90,17 @@ public class CameraDragMove : MonoBehaviour
         _lastMousePos = currentMousePos;
     }
 
+    /// <summary>
+    /// 将摄像机位置平滑插值到目标位置，避免生硬移动。
+    /// </summary>
     private void SmoothMoveCamera()
     {
         transform.position = Vector3.Lerp(transform.position, _targetCamPos, smoothSpeed);
     }
 
+    /// <summary>
+    /// 重置摄像机到默认位置，通常用于场景重置或退出拖拽模式。
+    /// </summary>
     public void ResetCamera()
     {
         _targetCamPos = new Vector3(0, fixedY, transform.position.z);

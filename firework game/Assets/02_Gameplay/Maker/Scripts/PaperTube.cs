@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// 烟花纸筒核心逻辑：负责材料堆叠、组件记录、类别映射（供判定用）
+/// 烟花纸筒核心逻辑：负责玩家点击纸筒时添加材料、维护堆叠列表、类别映射，供判定系统使用。
+/// 定义了核心函数：OnMouseDown、SpawnComponentVisual、ClearStack、GetComponentInCategory、HasCategoryComponent。
 /// </summary>
 public class PaperTube : MonoBehaviour
 {
@@ -58,6 +59,9 @@ public class PaperTube : MonoBehaviour
     public List<FireworkComponent> StackedFireworkComponents => new List<FireworkComponent>(m_StackedFireworkComponents);
     public Dictionary<ComponentCategory, FireworkComponent> CategoryComponentMap => new Dictionary<ComponentCategory, FireworkComponent>(m_CategoryComponentMap);
 
+    /// <summary>
+    /// 初始化纸筒单例、堆叠根节点和组件类别映射数据。
+    /// </summary>
     void Start()
     {
         // 设置单例
@@ -90,7 +94,7 @@ public class PaperTube : MonoBehaviour
     }
 
     /// <summary>
-    /// 点击纸筒添加选中的材料（核心交互逻辑）
+    /// 点击纸筒时触发：将当前选中的材料添加到纸筒中并生成对应的视觉堆叠。
     /// </summary>
     void OnMouseDown()
     {
@@ -275,7 +279,10 @@ public class PaperTube : MonoBehaviour
     }
 
     /// <summary>
-    /// 生成引线堆叠视觉效果
+    /// 生成粘土类组件的视觉堆叠效果，用于装饰当前纸筒。
+    /// </summary>
+    /// <summary>
+    /// 生成粘土类组件的视觉堆叠效果，用于装饰当前纸筒。
     /// </summary>
     private void SpawnClayInStack()
     {
@@ -304,6 +311,9 @@ public class PaperTube : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 生成引线组件的视觉堆叠效果，用于纸筒内部的引线装饰。
+    /// </summary>
     private void SpawnFuseInStack()
     {
         if (fusePrefab == null)
@@ -461,7 +471,7 @@ public class PaperTube : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取纸筒中某类别的组件（判定核心方法）
+    /// 获取纸筒中指定类别对应的当前组件，用于判定需求是否满足。
     /// </summary>
     public FireworkComponent GetComponentInCategory(ComponentCategory category)
     {
@@ -470,7 +480,7 @@ public class PaperTube : MonoBehaviour
     }
 
     /// <summary>
-    /// 检查纸筒是否包含某类别组件
+    /// 检查纸筒中是否已有指定类别的组件，辅助判定逻辑使用。
     /// </summary>
     public bool HasCategoryComponent(ComponentCategory category)
     {
@@ -507,6 +517,17 @@ public class PaperTube : MonoBehaviour
         m_CategoryComponentMap.Clear();
 
         Debug.Log("纸筒已清空，重置完成");
+    }
+
+    /// <summary>
+    /// 释放单例引用，确保对象销毁时不会残留静态实例。
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
     #endregion
 }

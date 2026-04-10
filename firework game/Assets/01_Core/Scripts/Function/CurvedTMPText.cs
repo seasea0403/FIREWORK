@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// 文本弯曲特效组件：为 TMP_Text 应用圆弧变形，使其呈现装饰性弯曲效果。
+/// </summary>
 [RequireComponent(typeof(TMP_Text))]
 public class CurvedTMPText : MonoBehaviour
 {
@@ -14,6 +17,9 @@ public class CurvedTMPText : MonoBehaviour
     private TMP_Text _tmpText;
     private Vector3[] _vertices;
 
+    /// <summary>
+    /// 组件启用时订阅 TMP 文本更改事件，并缓存文本组件引用。
+    /// </summary>
     void OnEnable()
     {
         _tmpText = GetComponent<TMP_Text>();
@@ -23,11 +29,17 @@ public class CurvedTMPText : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 禁用时取消订阅文本更改事件，以避免内存泄漏。
+    /// </summary>
     void OnDisable()
     {
         TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(OnTextChanged);
     }
 
+    /// <summary>
+    /// 当 TMP 文本内容发生变化时重新应用弯曲效果。
+    /// </summary>
     void OnTextChanged(Object obj)
     {
         if ((TMP_Text)obj == _tmpText)
@@ -36,6 +48,9 @@ public class CurvedTMPText : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 每帧末执行文本更新，保持弧形效果与文本内容一致。
+    /// </summary>
     void LateUpdate()
     {
         if (enableCurve && _tmpText != null)
@@ -44,6 +59,9 @@ public class CurvedTMPText : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 计算并应用文字顶点变形，使文本呈圆弧形排列。
+    /// </summary>
     void UpdateCurvedText()
     {
         if (_tmpText == null || !enableCurve) return;

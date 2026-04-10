@@ -41,6 +41,9 @@ public class UI_ToggleController : MonoBehaviour
     private Coroutine _currentHideCoroutine;
     private Button _button;
 
+    /// <summary>
+    /// 初始化控件，缓存目标面板的 CanvasGroup，并检查配置是否完整。
+    /// </summary>
     void Awake()
     {
         // 获取Button组件
@@ -255,6 +258,9 @@ public class UI_ToggleController : MonoBehaviour
     }
 
     // 🌟 淡入动画：从透明度0到1，包括所有子物体
+    /// <summary>
+    /// 逐渐将面板及其子物体透明度从0过渡到1，实现淡入效果。
+    /// </summary>
     IEnumerator FadeIn(GameObject panel)
     {
         CanvasGroup cg = _canvasGroups[panel];
@@ -297,6 +303,9 @@ public class UI_ToggleController : MonoBehaviour
     }
 
     // 🌟 淡出动画：从透明度1到0，完成后才SetActive(false)，包括所有子物体
+    /// <summary>
+    /// 逐渐将面板及其子物体透明度从1过渡到0，完成后隐藏面板。
+    /// </summary>
     IEnumerator FadeOut(GameObject panel)
     {
         CanvasGroup cg = _canvasGroups[panel];
@@ -347,6 +356,9 @@ public class UI_ToggleController : MonoBehaviour
 
     /// <summary>
     /// 切换单个面板的显隐状态
+    /// </summary>
+    /// <summary>
+    /// 单独切换指定面板的显隐状态，用于单个UI按钮控制。
     /// </summary>
     public void TogglePanel(GameObject panel)
     {

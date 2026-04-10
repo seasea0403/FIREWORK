@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using System.Collections;
 
+/// <summary>
+/// 客人管理器：负责加载当天客人、刷新客人UI、显示评价结果，并在客人切换或当天结束时触发状态切换。
+/// 定义了核心函数：LoadDayGuests、ShowJudgeResult、NextGuest、UpdateGuestDisplay、HideGuestDisplay、SwitchGuestSprite。
+/// </summary>
 public class GuestManager : Singleton<GuestManager>
 {
     [Header("客人显示配置（Inspector绑定）")]
@@ -23,6 +27,9 @@ public class GuestManager : Singleton<GuestManager>
     public List<GuestDemandSO> day4Guests;
     public List<GuestDemandSO> day5Guests;
 
+    /// <summary>
+    /// 初始化客人管理器单例，缓存UI组件并加载第一天客人。
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -46,6 +53,10 @@ public class GuestManager : Singleton<GuestManager>
         Debug.Log("GuestManager初始化完成！");
     }
 
+    /// <summary>
+    /// 根据指定天数加载当天客人列表，并初始化当前客人显示。
+    /// 在加载新的一天时同时重置工作台状态。
+    /// </summary>
     public void LoadDayGuests(int day)
     {
         List<GuestDemandSO> dayGuests = null;
@@ -170,6 +181,10 @@ public class GuestManager : Singleton<GuestManager>
         NextGuest();
     }
 
+    /// <summary>
+    /// 切换到当前天的下一个客人。
+    /// 如果当天客人已全部完成，则触发游戏进入下一天流程。
+    /// </summary>
     public void NextGuest()
     {
         int currentDay = (int)GameManager.Instance.gameState.currentDay + 1; // 转换为1-based索引
@@ -212,6 +227,9 @@ public class GuestManager : Singleton<GuestManager>
         }
     }
 
+    /// <summary>
+    /// 更新当前客人的UI显示，包括头像、名称和需求描述。
+    /// </summary>
     private void UpdateGuestDisplay()
     {
         if (currentGuest == null) { HideGuestDisplay(); return; }
@@ -232,12 +250,18 @@ public class GuestManager : Singleton<GuestManager>
         if (guestDemandText != null) guestDemandText.text = currentGuest.demandDesc;
     }
 
+    /// <summary>
+    /// 隐藏客人UI显示，通常在当前天客人结束后调用。
+    /// </summary>
     private void HideGuestDisplay()
     {
         if (guestSpriteObject != null) { guestSpriteObject.SetActive(false); }
         if (guestUIRoot != null) { guestUIRoot.SetActive(false); }
     }
 
+    /// <summary>
+    /// 根据客人当前评价结果切换客人表情贴图。
+    /// </summary>
     public void SwitchGuestSprite(bool isHappy)
     {
         if (currentGuest == null || m_GuestSpriteRenderer == null) return;

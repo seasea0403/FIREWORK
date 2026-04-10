@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 游戏全局管理器（继承泛型单例，仅管理GameState，不存储状态）
+/// 游戏全局管理器：管理游戏状态、天数切换、奖励、好评和碎片统计。
+/// 定义了核心函数：AddMoney、AddGoodReview、AddFragment、NextDay、ContinueToNextDay、UnlockDayComponent。
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
     // 核心：唯一的游戏状态实例（所有状态都存在这里，消除冗余）
     public GameState gameState;
 
-    // 重写Awake：初始化游戏状态
+    /// <summary>
+    /// 单例初始化并创建游戏全局状态实例，执行初始状态配置。
+    /// </summary>
     protected override void Awake()
     {
         base.Awake(); // 必须调用基类单例逻辑
@@ -110,6 +113,12 @@ public class GameManager : Singleton<GameManager>
             if (GuestManager.Instance != null)
             {
                 GuestManager.Instance.LoadDayGuests((int)gameState.currentDay + 1);
+            }
+
+            // 下一个天时重置纸筒并移动到工作台位置
+            if (PaperTubeManager.Instance != null)
+            {
+                PaperTubeManager.Instance.ResetAndMoveNewTube();
             }
 
             Debug.Log($"【全局状态】切换到Day{(int)gameState.currentDay}");
