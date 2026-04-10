@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day4_Normal5
   m_EditorClassIdentifier: 
-  guestName: "\u8363\u5B89\u90A6"
-  demandDesc: "\u4E00\u5E74\u597D\u666F\u541B\u987B\u8BB0\uFF0C\u6700\u662F\u6A59\u9EC4\u6A58\u7EFF\u65F6\u3002
-    \u638C\u67DC\u7684\u77A7\u77A7\u8FD9\u6A59\u5B50\uFF0C\u5706\u6EDA\u6EDA\u715E\u662F\u53EF\u7231\u3002\u82E5\u5B83\u80FD\u98DE\u4E0A\u5929\u53D8\u4F5C\u70DF\u82B1\uFF0C\u4F1A\u662F\u4F55\u7B49\u5149\u666F\uFF1F"
+  guestName: "\u674E\u754B"
+  demandDesc: "\u7B49\u95F2\u8BC6\u5F97\u4E1C\u98CE\u9762\uFF0C\u4E07\u7D2B\u5343\u7EA2\u603B\u662F\u6625\u3002
+    \u8001\u592B\u4E03\u5341\u5BFF\u8BDE\uFF0C\u60F3\u56FE\u4E2A\u2018\u4E94\u798F\u4E34\u95E8\u2019\u7684\u5F69\u5934\u3002\u5176\u4ED6\u5012\u4E0D\u62D8\u3002"
   perfectMoney: 100
   goodMoney: 60
   failMoney: 20
@@ -24,13 +24,13 @@ MonoBehaviour:
   failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
   isSpecialNPC: 0
-  normalSprite: {fileID: 21300000, guid: 6da55e7fb792f6b4fb57ef68557ecfe2, type: 3}
-  happySprite: {fileID: 21300000, guid: ca179b0bd74d6c34a899e92d3666f1f7, type: 3}
-  angrySprite: {fileID: 21300000, guid: 9cc8a0322ab9fc244a41d073a0d6be3e, type: 3}
-  coreSpecificComponents: 010000000d000000
-  coreCategoryAnyOne: 
+  normalSprite: {fileID: 21300000, guid: 30f81559b8141d34881dfd843a4e59dc, type: 3}
+  happySprite: {fileID: 21300000, guid: 9a87f75e594713d44a8d76a3a92b3221, type: 3}
+  angrySprite: {fileID: 21300000, guid: 8036bd5e6f5ad9243a28cdd7f8faefff, type: 3}
+  coreSpecificComponents: 10000000
+  coreCategoryAnyOne: 03000000
   secondarySpecificComponents: 
-  secondaryCategoryAnyOne: 0300000002000000
+  secondaryCategoryAnyOne: 01000000
   forbiddenSpecificComponents: 
   forbiddenCategoryAnyOne: 
   giveFragment: 0

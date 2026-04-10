@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day5_Normal2
   m_EditorClassIdentifier: 
-  guestName: "\u7518\u662D"
-  demandDesc: "\u65E5\u51FA\u6C5F\u82B1\u7EA2\u80DC\u706B\uFF0C\u6625\u6765\u6C5F\u6C34\u7EFF\u5982\u84DD\u3002
-    \u67D0\u5C31\u7231\u90A3\u7EA2\u8273\u8273\u7684\u5149\u666F\uFF01\u7ED9\u67D0\u6765\u4E2A\u90A3\u6837\u6700\u51B2\u7684\uFF01\u522B\u7684\u4F60\u770B\u7740\u914D\u5C31\u6210\u3002"
+  guestName: "\u8363\u5B89\u90A6"
+  demandDesc: "\u4ECA\u5C81\u5E74\u591C\u5BB4\u8BF7\u57CE\u4E2D\u8C6A\u5546\uFF0C\u9700\u4E00\u679A\u9547\u5F97\u4F4F\u573A\u9762\u7684\u3002\u4E00\u8981\u71C3\u5F97\u957F\u4E45\uFF0C\u4E8C\u8981\u53D8\u5316\u591A\u7AEF\uFF0C\u6216\u989C\u8272\u53D8\u6362\uFF0C\u6216\u54CD\u52A8\u4E0D\u4E00\u3002\u8D8A\u7E41\u590D\u8D8A\u663E\u6C14\u6D3E\uFF0C\u638C\u67DC\u7684\u653E\u624B\u53BB\u505A\u3002"
   perfectMoney: 100
   goodMoney: 60
   failMoney: 20
@@ -24,13 +23,13 @@ MonoBehaviour:
   failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
   isSpecialNPC: 0
-  normalSprite: {fileID: 21300000, guid: b82b17bbea9e7bc4dbbd08ec07744666, type: 3}
-  happySprite: {fileID: 21300000, guid: b0682450a86c5da4c9000ff5facf5b0c, type: 3}
-  angrySprite: {fileID: 21300000, guid: 837bc20136c3aa64e8af7e5bb3fa3d43, type: 3}
-  coreSpecificComponents: 010000000100000005000000
-  coreCategoryAnyOne: 03000000
-  secondarySpecificComponents: 03000000
-  secondaryCategoryAnyOne: 0400000002000000
+  normalSprite: {fileID: 21300000, guid: a3f22a72470ce6f48a37ba3e02f25737, type: 3}
+  happySprite: {fileID: 21300000, guid: 6ed5c8d0f40bbce4fbfb2ae3005f058c, type: 3}
+  angrySprite: {fileID: 21300000, guid: 394b7eb58bcbb3a419db838153984caf, type: 3}
+  coreSpecificComponents: 0400000010000000
+  coreCategoryAnyOne: 0300000001000000
+  secondarySpecificComponents: 
+  secondaryCategoryAnyOne: 04000000
   forbiddenSpecificComponents: 
   forbiddenCategoryAnyOne: 
   giveFragment: 0

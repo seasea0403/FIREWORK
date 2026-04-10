@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day3_Special
   m_EditorClassIdentifier: 
-  guestName: "\u987E\u6587\u624D"
-  demandDesc: "\u5C0F\u751F\u8FD9\u53A2\u6709\u793C\u4E86\u3002\u6562\u95EE\u638C\u67DC\uFF0C\u53EF\u6709\u4E03\u5915\u80FD\u653E\u7684\u70DF\u82B1\uFF1F\u5F85\u5230\u91D1\u98CE\u7389\u9732\u65F6\uFF0C\u5C0F\u751F\u60F3\u9001\u4E0E\u5FC3\u4E0A\u4EBA\uFF0C\u6548\u4EFF\u725B\u90CE\u7EC7\u5973\u4E4B\u610F\u3002"
+  guestName: "\u82F1\u5A25&\u677E\u54E5\u513F"
+  demandDesc: "\u638C\u67DC\u4E07\u798F\uFF01\u6211\u5BB6\u677E\u54E5\u513F\u8FD9\u51E0\u65E5\u602A\u5F97\u5F88\uFF0C\u767D\u65E5\u91CC\u6D3B\u8E66\u4E71\u8DF3\uFF0C\u4E00\u5230\u591C\u91CC\u5C31\u53D1\u70E7\uFF0C\u533B\u9986\u7684\u5927\u592B\u77A7\u4E86\u51E0\u65E5\u4E5F\u4E0D\u89C1\u597D\u3002\u53C8\u542C\u95FB\u5B98\u5E9C\u7981\u4EE4\uFF0C\u5FC3\u4E2D\u603B\u5F52\u6709\u4E9B\u4E0D\u592A\u5E73\u3002"
   perfectMoney: 200
   goodMoney: 120
   failMoney: 40
@@ -23,10 +23,10 @@ MonoBehaviour:
   failText: "\u8FD9\u2026\u2026\u600E\u7684\u53EA\u8E7F\u4E0A\u534A\u7A7A\u5C31\u6563\u4E86\uFF1F\u989C\u8272\u4E5F\u9EEF\u6DE1\uFF0C\u5012\u6559\u5C0F\u751F\u5728\u90A3\u6865\u4E0A\u7AD9\u4E86\u597D\u5927\u4E00\u4E2A\u6CA1\u8DA3\u3002"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
   isSpecialNPC: 1
-  normalSprite: {fileID: 21300000, guid: 2d6f4e11f46c76a469630f907d6be6e3, type: 3}
-  happySprite: {fileID: 21300000, guid: 88e0584adf091884585e71c69db81c6c, type: 3}
-  angrySprite: {fileID: 21300000, guid: 45d225a6e1412f04bbe97f2ecdd37f5d, type: 3}
-  coreSpecificComponents: 01000000060000000a000000030000000d000000
+  normalSprite: {fileID: 21300000, guid: 44e7ba8d073d2ef428f33913a3958cdc, type: 3}
+  happySprite: {fileID: 21300000, guid: 5a083a0954766d74f826c3121642981a, type: 3}
+  angrySprite: {fileID: 21300000, guid: e498996f5f977a547a0172989382106b, type: 3}
+  coreSpecificComponents: 020000000600000007000000040000000b000000
   coreCategoryAnyOne: 
   secondarySpecificComponents: 
   secondaryCategoryAnyOne: 0300000002000000

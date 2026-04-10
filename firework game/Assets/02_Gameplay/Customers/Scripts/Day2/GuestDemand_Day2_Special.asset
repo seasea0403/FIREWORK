@@ -25,7 +25,7 @@ MonoBehaviour:
   isSpecialNPC: 1
   normalSprite: {fileID: 21300000, guid: 2d6f4e11f46c76a469630f907d6be6e3, type: 3}
   happySprite: {fileID: 21300000, guid: 88e0584adf091884585e71c69db81c6c, type: 3}
-  angrySprite: {fileID: 21300000, guid: 45d225a6e1412f04bbe97f2ecdd37f5d, type: 3}
+  angrySprite: {fileID: 21300000, guid: a7776f4ee8f86ab4d9843f4b28d6b6d4, type: 3}
   coreSpecificComponents: 01000000060000000a000000030000000d000000
   coreCategoryAnyOne: 
   secondarySpecificComponents: 

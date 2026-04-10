@@ -36,6 +36,11 @@ public class GameManager : Singleton<GameManager>
     public void AddGoodReview()
     {
         gameState.totalGoodReviews++;
+        // 同时更新结算管理器的当天好评统计
+        if (SettlementManager.Instance != null)
+        {
+            SettlementManager.Instance.AddDayGoodReview();
+        }
         Debug.Log($"【全局状态】好评数+1，当前总好评：{gameState.totalGoodReviews}");
 
         // 可扩展：好评数达标触发奖励/剧情
@@ -65,6 +70,23 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void NextDay()
     {
+        // 显示结算页面，而不是直接切换天数
+        if (SettlementManager.Instance != null)
+        {
+            SettlementManager.Instance.ShowSettlement();
+        }
+        else
+        {
+            // 如果没有结算管理器，直接继续到下一天
+            ContinueToNextDay();
+        }
+    }
+
+    /// <summary>
+    /// 继续到下一天（从结算页面调用）
+    /// </summary>
+    public void ContinueToNextDay()
+    {
         // 先标记当天完成
         gameState.isCurrentDayCompleted = true;
 
@@ -72,11 +94,23 @@ public class GameManager : Singleton<GameManager>
         if (gameState.currentDay < GameDay.Day5)
         {
             gameState.currentDay++;
-            // 切换天数后重置“当天完成”状态
+            // 切换天数后重置"当天完成"状态
             gameState.isCurrentDayCompleted = false;
+
+            // 重置当天统计数据
+            if (SettlementManager.Instance != null)
+            {
+                SettlementManager.Instance.ResetDayStats();
+            }
 
             // 可扩展：解锁新组件（比如Day2解锁高级火药）
             UnlockDayComponent(gameState.currentDay);
+
+            // 通知GuestManager加载新一天的客人
+            if (GuestManager.Instance != null)
+            {
+                GuestManager.Instance.LoadDayGuests((int)gameState.currentDay + 1);
+            }
 
             Debug.Log($"【全局状态】切换到Day{(int)gameState.currentDay}");
         }

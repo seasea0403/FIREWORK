@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day4_Normal2
   m_EditorClassIdentifier: 
-  guestName: "\u7518\u662D"
-  demandDesc: "\u65E5\u51FA\u6C5F\u82B1\u7EA2\u80DC\u706B\uFF0C\u6625\u6765\u6C5F\u6C34\u7EFF\u5982\u84DD\u3002
-    \u67D0\u5C31\u7231\u90A3\u7EA2\u8273\u8273\u7684\u5149\u666F\uFF01\u7ED9\u67D0\u6765\u4E2A\u90A3\u6837\u6700\u51B2\u7684\uFF01\u522B\u7684\u4F60\u770B\u7740\u914D\u5C31\u6210\u3002"
+  guestName: "\u5A07\u5A25"
+  demandDesc: "\u613F\u6211\u5982\u661F\u541B\u5982\u6708\uFF0C\u591C\u591C\u6D41\u5149\u76F8\u768E\u6D01\u3002\u60F3\u4E70\u4E2A\u70DF\u82B1\u9001\u4EBA\uFF0C\u4E0D\u77E5\u53EF\u6709\u6A21\u6837\u7A00\u5947\u4E9B\u7684\u2026\u2026\u50CF\u4E2A\u2026\u2026\u50CF\u4E2A\u5E76\u8482\u83B2\uFF1F\u6216\u8005\u2026\u2026\u5FC3\u6709\u7075\u7280\u4E00\u70B9\u901A"
   perfectMoney: 100
   goodMoney: 60
   failMoney: 20
@@ -27,10 +26,10 @@ MonoBehaviour:
   normalSprite: {fileID: 21300000, guid: b82b17bbea9e7bc4dbbd08ec07744666, type: 3}
   happySprite: {fileID: 21300000, guid: b0682450a86c5da4c9000ff5facf5b0c, type: 3}
   angrySprite: {fileID: 21300000, guid: 837bc20136c3aa64e8af7e5bb3fa3d43, type: 3}
-  coreSpecificComponents: 010000000100000005000000
-  coreCategoryAnyOne: 03000000
-  secondarySpecificComponents: 03000000
-  secondaryCategoryAnyOne: 0400000002000000
+  coreSpecificComponents: 0e000000
+  coreCategoryAnyOne: 
+  secondarySpecificComponents: 
+  secondaryCategoryAnyOne: 04000000020000000100000003000000
   forbiddenSpecificComponents: 
   forbiddenCategoryAnyOne: 
   giveFragment: 0

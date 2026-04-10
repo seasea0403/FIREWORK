@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day3_Normal5
   m_EditorClassIdentifier: 
-  guestName: "\u8363\u5B89\u90A6"
-  demandDesc: "\u4E00\u5E74\u597D\u666F\u541B\u987B\u8BB0\uFF0C\u6700\u662F\u6A59\u9EC4\u6A58\u7EFF\u65F6\u3002
-    \u638C\u67DC\u7684\u77A7\u77A7\u8FD9\u6A59\u5B50\uFF0C\u5706\u6EDA\u6EDA\u715E\u662F\u53EF\u7231\u3002\u82E5\u5B83\u80FD\u98DE\u4E0A\u5929\u53D8\u4F5C\u70DF\u82B1\uFF0C\u4F1A\u662F\u4F55\u7B49\u5149\u666F\uFF1F"
+  guestName: "\u963F\u798F"
+  demandDesc: "\u6211\u60F3\u8981\u4E00\u4E2A\u8FD9\u6837\u7684\u70DF\u82B1\uFF01\u5148\u5728\u4E0B\u5934\u2018\u7830\u2019\u5730\u70B8\u5F00\uFF0C\u5168\u662F\u7EA2\u7684\uFF1B\u8FC7\u4E00\u5C0F\u4F1A\u513F\uFF0C\u53C8\u5728\u4E0A\u5934\u2018\u7830\u2019\u5730\u70B8\u5F00\uFF0C\u5168\u662F\u9EC4\u7684\uFF01"
   perfectMoney: 100
   goodMoney: 60
   failMoney: 20
@@ -24,13 +23,13 @@ MonoBehaviour:
   failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
   isSpecialNPC: 0
-  normalSprite: {fileID: 21300000, guid: 6da55e7fb792f6b4fb57ef68557ecfe2, type: 3}
-  happySprite: {fileID: 21300000, guid: ca179b0bd74d6c34a899e92d3666f1f7, type: 3}
-  angrySprite: {fileID: 21300000, guid: 9cc8a0322ab9fc244a41d073a0d6be3e, type: 3}
-  coreSpecificComponents: 010000000d000000
+  normalSprite: {fileID: 21300000, guid: 4bfbe19107a1c6a4ebf4660883606e16, type: 3}
+  happySprite: {fileID: 21300000, guid: dc827e927cceafe429b240d694ae8f28, type: 3}
+  angrySprite: {fileID: 21300000, guid: d060266ce69fe2c4ca76ce5adea25b2c, type: 3}
+  coreSpecificComponents: 100000000500000009000000
   coreCategoryAnyOne: 
   secondarySpecificComponents: 
-  secondaryCategoryAnyOne: 0300000002000000
+  secondaryCategoryAnyOne: 0200000004000000
   forbiddenSpecificComponents: 
   forbiddenCategoryAnyOne: 
   giveFragment: 0

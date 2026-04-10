@@ -6,6 +6,8 @@ using System.Collections.Generic;
 /// </summary>
 public class PaperTube : MonoBehaviour
 {
+    // 单例模式
+    public static PaperTube Instance { get; private set; }
     [Header("=== 火药类预制体 ===")]
     public GameObject powderIn1Prefab;   // 火药第一层预制体
     public GameObject powderIn2Prefab;   // 火药第二层预制体
@@ -58,6 +60,17 @@ public class PaperTube : MonoBehaviour
 
     void Start()
     {
+        // 设置单例
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // 获取纸筒自身的SpriteRenderer
         m_TubeSpriteRenderer = GetComponent<SpriteRenderer>();
 

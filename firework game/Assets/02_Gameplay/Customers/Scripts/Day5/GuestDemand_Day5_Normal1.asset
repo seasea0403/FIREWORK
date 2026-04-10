@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day5_Normal1
   m_EditorClassIdentifier: 
-  guestName: "\u5E03\u59E5\u59E5"
-  demandDesc: "\u638C\u67DC\uFF0C\u53EF\u80FD\u505A\u51FA\u7D2B\u8272\u989C\u8272\uFF0C\u53C8\u80FD\u4E0A\u5929\u7684\u70DF\u82B1\uFF1F"
+  guestName: "\u79C0\u79C0"
+  demandDesc: "\u70DF\u82B1\u80FD\u4E0D\u80FD\u505A\u6210\u2018\u8D77\u706B\u2019\u6A21\u6837\uFF1F\u4E0A\u5934\u5C16\u5C16\uFF0C\u4E0B\u5934\u5706\u5706\uFF0C\u70B9\u4E0A\u706B\u80FD\u76F4\u76F4\u8E7F\u4E0A\u5929\uFF01\u8981\u90A3\u7B80\u7B80\u5355\u5355\u4E00\u98DE\u51B2\u5929\u7684\u3002"
   perfectMoney: 100
   goodMoney: 60
   failMoney: 20
@@ -23,14 +23,14 @@ MonoBehaviour:
   failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
   isSpecialNPC: 0
-  normalSprite: {fileID: 21300000, guid: 0c216459d41a10d41aec3c2b7e57fdfc, type: 3}
-  happySprite: {fileID: 21300000, guid: 267fcd95b1c41b247b9310f5c64751b3, type: 3}
-  angrySprite: {fileID: 21300000, guid: 45d225a6e1412f04bbe97f2ecdd37f5d, type: 3}
-  coreSpecificComponents: 050000000600000001000000
+  normalSprite: {fileID: 21300000, guid: b82b17bbea9e7bc4dbbd08ec07744666, type: 3}
+  happySprite: {fileID: 21300000, guid: b0682450a86c5da4c9000ff5facf5b0c, type: 3}
+  angrySprite: {fileID: 21300000, guid: 837bc20136c3aa64e8af7e5bb3fa3d43, type: 3}
+  coreSpecificComponents: 0c0000000b00000001000000
   coreCategoryAnyOne: 
   secondarySpecificComponents: 
   secondaryCategoryAnyOne: 0200000004000000
-  forbiddenSpecificComponents: 
+  forbiddenSpecificComponents: 10000000
   forbiddenCategoryAnyOne: 
   giveFragment: 0
   fragmentCount: 1

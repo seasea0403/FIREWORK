@@ -6,17 +6,22 @@ using System.Collections;
 
 public class GuestManager : Singleton<GuestManager>
 {
-    [Header("🎎 客人显示配置（Inspector绑定）")]
+    [Header("客人显示配置（Inspector绑定）")]
     public GameObject guestSpriteObject;
     public TMP_Text guestNameText;
     public TMP_Text guestDemandText;
     public GameObject guestUIRoot;
-    // 🔥 新增：缓存根节点的CanvasGroup（控制整体透明度）
+    //缓存根节点的CanvasGroup（控制整体透明度）
     private CanvasGroup m_UIRootCanvasGroup;
 
     private SpriteRenderer m_GuestSpriteRenderer;
     public GuestDemandSO currentGuest;
+    //客人列表
     public List<GuestDemandSO> day1Guests;
+    public List<GuestDemandSO> day2Guests;
+    public List<GuestDemandSO> day3Guests;
+    public List<GuestDemandSO> day4Guests;
+    public List<GuestDemandSO> day5Guests;
 
     protected override void Awake()
     {
@@ -28,7 +33,7 @@ public class GuestManager : Singleton<GuestManager>
                 m_GuestSpriteRenderer = guestSpriteObject.AddComponent<SpriteRenderer>();
         }
 
-        // 🔥 初始化：获取根节点的CanvasGroup
+        // 初始化：获取根节点的CanvasGroup
         if (guestUIRoot != null)
         {
             m_UIRootCanvasGroup = guestUIRoot.GetComponent<CanvasGroup>();
@@ -43,10 +48,33 @@ public class GuestManager : Singleton<GuestManager>
 
     public void LoadDayGuests(int day)
     {
-        if (day == 1 && day1Guests != null && day1Guests.Count > 0)
+        List<GuestDemandSO> dayGuests = null;
+
+        switch (day)
         {
-            currentGuest = day1Guests[0];
+            case 1: dayGuests = day1Guests; break;
+            case 2: dayGuests = day2Guests; break;
+            case 3: dayGuests = day3Guests; break;
+            case 4: dayGuests = day4Guests; break;
+            case 5: dayGuests = day5Guests; break;
+            default:
+                Debug.LogWarning($"不支持的天数：{day}");
+                HideGuestDisplay();
+                return;
+        }
+
+        if (dayGuests != null && dayGuests.Count > 0)
+        {
+            // 加载新一天时重置工作台状态
+            if (PaperTube.Instance != null)
+            {
+                PaperTube.Instance.ClearStack();
+                Debug.Log($"加载Day{day}时重置工作台状态");
+            }
+
+            currentGuest = dayGuests[0];
             UpdateGuestDisplay();
+            Debug.Log($"加载Day{day}的客人数据，共{dayGuests.Count}个客人");
         }
         else
         {
@@ -56,7 +84,7 @@ public class GuestManager : Singleton<GuestManager>
     }
 
     /// <summary>
-    /// 🔥 核心：判定完成后调用 → 显示表情+台词
+    /// 判定完成后调用 → 显示表情+台词
     /// </summary>
     public void ShowJudgeResult(JudgeResult result)
     {
@@ -95,6 +123,11 @@ public class GuestManager : Singleton<GuestManager>
             case JudgeResult.Fail: reward = currentGuest.failMoney; break;
         }
         GameManager.Instance.AddMoney(reward);
+        // 同时更新结算管理器的当天收入统计
+        if (SettlementManager.Instance != null)
+        {
+            SettlementManager.Instance.AddDayEarnings(reward);
+        }
         Debug.Log($"获得报酬：{reward} 文钱");
 
         // 完美评价+特殊NPC → 发放碎片
@@ -139,22 +172,41 @@ public class GuestManager : Singleton<GuestManager>
 
     public void NextGuest()
     {
-        if (day1Guests == null || day1Guests.Count == 0)
+        int currentDay = (int)GameManager.Instance.gameState.currentDay + 1; // 转换为1-based索引
+        List<GuestDemandSO> currentDayGuests = null;
+
+        switch (currentDay)
         {
-            Debug.LogWarning("Day1客人列表为空！");
+            case 1: currentDayGuests = day1Guests; break;
+            case 2: currentDayGuests = day2Guests; break;
+            case 3: currentDayGuests = day3Guests; break;
+            case 4: currentDayGuests = day4Guests; break;
+            case 5: currentDayGuests = day5Guests; break;
+        }
+
+        if (currentDayGuests == null || currentDayGuests.Count == 0)
+        {
+            Debug.LogWarning($"Day{currentDay}客人列表为空！");
             HideGuestDisplay();
             return;
         }
 
-        int currentIndex = day1Guests.IndexOf(currentGuest);
-        if (currentIndex < day1Guests.Count - 1)
+        int currentIndex = currentDayGuests.IndexOf(currentGuest);
+        if (currentIndex < currentDayGuests.Count - 1)
         {
-            currentGuest = day1Guests[currentIndex + 1];
+            // 重置工作台状态
+            if (PaperTube.Instance != null)
+            {
+                PaperTube.Instance.ClearStack();
+                Debug.Log("切换客人时重置工作台状态");
+            }
+
+            currentGuest = currentDayGuests[currentIndex + 1];
             UpdateGuestDisplay();
         }
         else
         {
-            Debug.Log("Day1客人已接待完毕，切换到下一天！");
+            Debug.Log($"Day{currentDay}客人已接待完毕，切换到下一天！");
             HideGuestDisplay();
             GameManager.Instance.NextDay();
         }

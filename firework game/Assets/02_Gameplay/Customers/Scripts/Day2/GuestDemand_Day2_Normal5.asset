@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
   m_Name: GuestDemand_Day2_Normal5
   m_EditorClassIdentifier: 
-  guestName: "\u8363\u5B89\u90A6"
+  guestName: "\u987E\u6587\u624D"
   demandDesc: "\u4E00\u5E74\u597D\u666F\u541B\u987B\u8BB0\uFF0C\u6700\u662F\u6A59\u9EC4\u6A58\u7EFF\u65F6\u3002
     \u638C\u67DC\u7684\u77A7\u77A7\u8FD9\u6A59\u5B50\uFF0C\u5706\u6EDA\u6EDA\u715E\u662F\u53EF\u7231\u3002\u82E5\u5B83\u80FD\u98DE\u4E0A\u5929\u53D8\u4F5C\u70DF\u82B1\uFF0C\u4F1A\u662F\u4F55\u7B49\u5149\u666F\uFF1F"
   perfectMoney: 100

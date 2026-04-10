@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da36f54ab4ba7d0479cb8c55e63e7e08, type: 3}
-  m_Name: GuestDemand_Day3_Normal3
+  m_Name: GuestDemand_Day5_Special2
   m_EditorClassIdentifier: 
-  guestName: "\u7518\u662D"
-  demandDesc: "\u672C\u516C\u5B50\u4ECA\u65E5\u5BB4\u5BA2\uFF0C\u8981\u7528\u6700\u8D35\u91CD\u7A00\u7F55\u7684\u989C\u8272\u3002\u522B\u7684\u4F60\u770B\u7740\u529E"
-  perfectMoney: 100
-  goodMoney: 60
-  failMoney: 20
+  guestName: "\u5C71\u9B48"
+  demandDesc: "\u54CE\u54DF\u54DF\uFF0C\u5C31\u662F\u4F60\u8FD9\u53AE\u5728\u5356\u70DF\u82B1\u554A\uFF1F"
+  perfectMoney: 200
+  goodMoney: 120
+  failMoney: 40
   timeoutMoney: 0
-  perfectText: "\u795E\u4E4E\u5176\u6280\uFF01\u6BD4\u67D0\u60F3\u7684\u8FD8\u8981\u597D\uFF0C\u4E0B\u56DE\u5B9A\u5F53\u518D\u6765\u5149\u987E\uFF01"
+  perfectText: "\u5999\u54C9\uFF01\u5982\u5979\u89C1\u4E86\uFF0C\u63A9\u9762\u800C\u7B11\uFF0C\u5C0F\u751F\u5FC3\u613F\u8DB3\u77E3\u3002"
   goodText: "\u5C1A\u53EF\u5C1A\u53EF\uFF0C\u52C9\u5F3A\u5408\u67D0\u5FC3\u610F\uFF0C\u8D4F\u4F60\u4E9B\u788E\u94F6\uFF01"
-  failText: "\u8D27\u4E0D\u5BF9\u677F\uFF01\u8FD9\u822C\u624B\u827A\u4E5F\u6562\u51FA\u6765\u505A\u751F\u610F\uFF1F\u6263\u94B1\uFF01"
+  failText: "\u8FD9\u2026\u2026\u600E\u7684\u53EA\u8E7F\u4E0A\u534A\u7A7A\u5C31\u6563\u4E86\uFF1F\u989C\u8272\u4E5F\u9EEF\u6DE1\uFF0C\u5012\u6559\u5C0F\u751F\u5728\u90A3\u6865\u4E0A\u7AD9\u4E86\u597D\u5927\u4E00\u4E2A\u6CA1\u8DA3\u3002"
   timeoutText: "\u8FD9\u2026\u2026\u505A\u5F97\u4E5F\u592A\u6162\u4E86\uFF0C\u67D0\u53BB\u522B\u5BB6\u770B\u770B\u3002"
-  isSpecialNPC: 0
+  isSpecialNPC: 1
   normalSprite: {fileID: 21300000, guid: 2d6f4e11f46c76a469630f907d6be6e3, type: 3}
   happySprite: {fileID: 21300000, guid: 88e0584adf091884585e71c69db81c6c, type: 3}
-  angrySprite: {fileID: 21300000, guid: a7776f4ee8f86ab4d9843f4b28d6b6d4, type: 3}
-  coreSpecificComponents: 06000000
-  coreCategoryAnyOne: 03000000
+  angrySprite: {fileID: 21300000, guid: 45d225a6e1412f04bbe97f2ecdd37f5d, type: 3}
+  coreSpecificComponents: 01000000060000000a000000030000000d000000
+  coreCategoryAnyOne: 
   secondarySpecificComponents: 
-  secondaryCategoryAnyOne: 040000000200000001000000
+  secondaryCategoryAnyOne: 0300000002000000
   forbiddenSpecificComponents: 
   forbiddenCategoryAnyOne: 
-  giveFragment: 0
+  giveFragment: 1
   fragmentCount: 1
